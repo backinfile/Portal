@@ -24,10 +24,10 @@ public class Logger {
     }
 
     public void error(Throwable throwable) {
-        LogManager.localAppender.append(LogLevel.INFO, tag, "", throwable);
+        LogManager.localAppender.append(LogLevel.INFO, tag, "", null, throwable);
     }
 
     public void error(String message, Throwable throwable) {
-        LogManager.localAppender.append(LogLevel.INFO, tag, message, throwable);
+        LogManager.localAppender.append(LogLevel.INFO, tag, message, null, throwable);
     }
 }
