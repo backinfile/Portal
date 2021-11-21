@@ -1,5 +1,9 @@
 package com.backinfile.support;
 
 public interface IAlive {
-	void pulse();
+    void start();
+
+    void update(long timeDelta);
+
+    void dispose();
 }

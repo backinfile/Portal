@@ -1,7 +1,7 @@
-package com.backinfile.portal.screens;
+package com.backinfile.portal.view.screens;
 
 import com.backinfile.gdxSupport.DefaultScreen;
-import com.backinfile.support.Log;
+import com.backinfile.portal.Log;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
