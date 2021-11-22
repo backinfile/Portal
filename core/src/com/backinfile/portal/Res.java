@@ -31,9 +31,9 @@ public class Res {
     public static BitmapFont DefaultFontSmall;
     public static BitmapFont DefaultFontLarge;
     public static BitmapFont DefaultFont;
-    private static FontCharacterCollection fontCharacterCollection = new FontCharacterCollection();
-    private static Map<String, Texture> textureMap = new HashMap<>(); // path->image
-    private static Map<LocalString.LocalImagePathString, TextureRegionDrawable> cardImageMap = new HashMap<>();
+    private static final FontCharacterCollection fontCharacterCollection = new FontCharacterCollection();
+    private static final Map<String, Texture> textureMap = new HashMap<>(); // path->image
+    private static final Map<LocalString.LocalImagePathString, TextureRegionDrawable> cardImageMap = new HashMap<>();
 
 
     private static final Set<Texture> textureToDispose = new HashSet<>();
@@ -70,7 +70,13 @@ public class Res {
         for (LocalString.LocalImagePathString imageString : LocalString.getAllImagePathStrings()) {
             String path = imageString.path;
             if (!textureMap.containsKey(path)) {
-                Texture texture = new Texture(path);
+                Texture texture = null;
+                try {
+                    texture = new Texture(path);
+                } catch (Exception e) {
+                    Log.res.warn("load texture: {} error", path);
+                    texture = TEX_GRAY.getRegion().getTexture();
+                }
                 texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
                 textureMap.put(path, texture);
             }
@@ -114,6 +120,7 @@ public class Res {
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         fontCharacterCollection.put(FreeTypeFontGenerator.DEFAULT_CHARS);
         parameter.characters = fontCharacterCollection.getAll();
+        parameter.borderWidth = 1;
 
         parameter.size = 12;
         DefaultFontSmallSmall = generator.generateFont(parameter);

@@ -54,6 +54,30 @@ public class LocalString {
         return imagePathStringList;
     }
 
+    public static LocalCardString getCardString(String sn) {
+        if (cardStringMap.containsKey(sn)) {
+            return cardStringMap.get(sn);
+        }
+        Log.res.warn("missing card string:{}", sn);
+        return LocalCardString.EmptyString;
+    }
+
+    public static LocalSkillString getSkillString(String sn) {
+        if (skillStringMap.containsKey(sn)) {
+            return skillStringMap.get(sn);
+        }
+        Log.res.warn("missing skill string:{}", sn);
+        return LocalSkillString.EmptyString;
+    }
+
+    public static LocalUIString getUIString(String sn) {
+        if (uiStringMap.containsKey(sn)) {
+            return uiStringMap.get(sn);
+        }
+        Log.res.warn("missing ui string:{}", sn);
+        return LocalUIString.EmptyString;
+    }
+
     public static class LocalCardString {
         public static LocalCardString EmptyString = new LocalCardString();
 

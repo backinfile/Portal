@@ -32,4 +32,9 @@ public class MainGame extends DefaultGame {
 
         setScreen(GameScreen.class);
     }
+
+    @Override
+    public void dispose() {
+        Res.dispose();
+    }
 }

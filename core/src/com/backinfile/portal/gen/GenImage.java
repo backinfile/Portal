@@ -14,6 +14,7 @@ public class GenImage {
     @Timing("gen image")
     public static void gen() {
         genCardBoarder();
+        genVirus();
     }
 
     private static void genCardBoarder() {
@@ -25,13 +26,25 @@ public class GenImage {
         Pixmap pixmap = new Pixmap(width, height, Pixmap.Format.RGBA8888);
         pixmap.setBlending(Pixmap.Blending.None);
 
-        drawRoundCornerBorder(pixmap, Color.GRAY, width, height, borderWidth);
+        drawRoundCornerBorder(pixmap, Color.LIGHT_GRAY, width, height, borderWidth);
         pixmap.setColor(Color.WHITE);
         drawBorder(pixmap, width - borderWidth2, height - borderWidth2, borderWidth, borderWidth, borderWidth);
 
-        writeImageFile(pixmap, "cardBoarder");
+        writeImageFile(pixmap, "cardBorder");
         pixmap.dispose();
-        Log.res.info("gen card boarder");
+        Log.res.info("gen image: card boarder");
+    }
+
+    private static void genVirus() {
+        int width = Settings.CARD_WIDTH;
+        int height = Settings.CARD_HEIGHT;
+        Pixmap pixmap = new Pixmap(width, height, Pixmap.Format.RGBA8888);
+        pixmap.setColor(Color.SKY);
+        pixmap.fill();
+
+        writeImageFile(pixmap, "virus");
+        pixmap.dispose();
+        Log.res.info("gen image: virus");
     }
 
     private static void drawRoundCornerBorder(Pixmap pixmap, Color color, int width, int height, int borderWidth) {

@@ -20,7 +20,7 @@ public class GlobalSize {
         STAGE_WIDTH = STAGE_HEIGHT / 0.8f;
 
         CARD_HEIGHT = Gdx.graphics.getHeight() * 0.15f;
-        CARD_WIDTH = CARD_HEIGHT * 0.715f;
+        CARD_WIDTH = CARD_HEIGHT / 8 * 6;
         CARD_HEIGHT_L = CARD_HEIGHT * 4 / 3f;
         CARD_WIDTH_L = CARD_WIDTH * 4 / 3f;
         CARD_HEIGHT_LL = CARD_HEIGHT * 3.6f;

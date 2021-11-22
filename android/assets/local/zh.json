@@ -1,5 +1,22 @@
 {
-  "cards": [],
+  "cards": [
+    {
+      "sn": "Virus",
+      "name": "病毒",
+      "image": {
+        "path": "image/gen/virus.png"
+      }
+    }
+  ],
   "skills": [],
-  "ui": []
+  "ui": [
+    {
+      "sn": "card",
+      "images": [
+        {
+          "path": "image/gen/cardBorder.png"
+        }
+      ]
+    }
+  ]
 }

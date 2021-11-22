@@ -8,6 +8,9 @@ public class Settings {
 
     public static final boolean DEV = true;
 
+    public static final int SCREEN_WIDTH = 1334;
+    public static final int SCREEN_HEIGHT = 750;
+
     public static final int CARD_WIDTH = 600;
     public static final int CARD_HEIGHT = 800;
 
