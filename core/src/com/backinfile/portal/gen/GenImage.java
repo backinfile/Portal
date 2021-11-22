@@ -26,8 +26,8 @@ public class GenImage {
         Pixmap pixmap = new Pixmap(width, height, Pixmap.Format.RGBA8888);
         pixmap.setBlending(Pixmap.Blending.None);
 
-        drawRoundCornerBorder(pixmap, Color.LIGHT_GRAY, width, height, borderWidth);
-        pixmap.setColor(Color.WHITE);
+        drawRoundCornerBorder(pixmap, Color.WHITE, width, height, borderWidth);
+        pixmap.setColor(Color.GRAY);
         drawBorder(pixmap, width - borderWidth2, height - borderWidth2, borderWidth, borderWidth, borderWidth);
 
         writeImageFile(pixmap, "cardBorder");

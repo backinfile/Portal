@@ -6,7 +6,7 @@ import com.badlogic.gdx.Gdx;
 public class Settings {
     public static final String PACKAGE_NAME = "com.backinfile";
 
-    public static final boolean DEV = true;
+    private static final boolean DEV = true;
 
     public static final int SCREEN_WIDTH = 1334;
     public static final int SCREEN_HEIGHT = 750;
@@ -16,7 +16,7 @@ public class Settings {
 
     public static boolean inDev() {
         if (Gdx.app == null) {
-            return DEV;
+            return false;
         }
         return DEV && Gdx.app.getType() == Application.ApplicationType.Desktop;
     }

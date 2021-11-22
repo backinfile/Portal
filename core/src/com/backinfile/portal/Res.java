@@ -116,11 +116,11 @@ public class Res {
 
     @Timing
     private static void initFont() {
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("font/JetBrainsMono-VariableFont_wght.ttf"));
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("font/SourceHanSans-Light.otf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         fontCharacterCollection.put(FreeTypeFontGenerator.DEFAULT_CHARS);
         parameter.characters = fontCharacterCollection.getAll();
-        parameter.borderWidth = 1;
+        parameter.borderWidth = 0.1f;
 
         parameter.size = 12;
         DefaultFontSmallSmall = generator.generateFont(parameter);

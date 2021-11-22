@@ -2,11 +2,14 @@ package com.backinfile.portal.view.screens;
 
 import com.backinfile.portal.LocalString;
 import com.backinfile.portal.Log;
+import com.backinfile.portal.Res;
 import com.backinfile.portal.model.Card;
 import com.backinfile.portal.view.group.CardView;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 
@@ -29,5 +32,7 @@ public class GameStage extends Stage {
         });
 
         addActor(cardView);
+
+        addActor(new Label("asdsaf病毒", new Label.LabelStyle(Res.DefaultFont, Color.BLACK)));
     }
 }

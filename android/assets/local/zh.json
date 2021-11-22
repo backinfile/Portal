@@ -2,7 +2,10 @@
   "cards": [
     {
       "sn": "Virus",
-      "name": "病毒",
+      "name": "病毒Virus",
+      "cardType": "Virus",
+      "cost": 0,
+      "health": 2,
       "image": {
         "path": "image/gen/virus.png"
       }

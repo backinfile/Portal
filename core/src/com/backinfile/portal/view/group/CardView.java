@@ -3,7 +3,9 @@ package com.backinfile.portal.view.group;
 import com.backinfile.portal.LocalString;
 import com.backinfile.portal.Res;
 import com.backinfile.portal.model.Card;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.BitmapFontCache;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
@@ -13,12 +15,16 @@ public class CardView extends Actor {
 
     private TextureRegionDrawable borderImage;
     private TextureRegionDrawable mainImage;
+    private Color borderColor = new Color(Color.RED);
 
     private final GlyphLayout titleLayout = new GlyphLayout();
+    private BitmapFontCache bitmapFontCache;
 
     private Card card;
 
     public CardView() {
+        bitmapFontCache = Res.DefaultFont.newFontCache();
+        
     }
 
     public static class CardViewState {
@@ -31,12 +37,14 @@ public class CardView extends Actor {
         borderImage = Res.getTexture(LocalString.getUIString("card").images[0]);
         mainImage = Res.getTexture(card.localCardString.image);
 
+
         setCardViewState(CardViewState.Normal);
     }
 
     public void setCardViewState(CardViewState cardViewState) {
         setSize(cardViewState.cardSize.getWidth(), cardViewState.cardSize.getHeight());
         setOrigin(Align.center);
+        bitmapFontCache.setText(card.localCardString.name, getX(), getY(), getWidth(), Align.center, false);
     }
 
     @Override
@@ -44,9 +52,14 @@ public class CardView extends Actor {
         if (card == null) {
             return;
         }
+        batch.setColor(getColor());
         mainImage.draw(batch, getX(), getY(), getOriginX(), getOriginY(),
                 getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation());
+
+        batch.setColor(borderColor);
         borderImage.draw(batch, getX(), getY(), getOriginX(), getOriginY(),
                 getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation());
+
+        bitmapFontCache.draw(batch);
     }
 }
