@@ -4,11 +4,14 @@ import com.backinfile.portal.LocalString;
 
 public class Card {
     public long id;
-    public CardType cardType;
-
     public int cost, finalCost;
     public int health, healthMax, finalHealth;
-
     public LocalString.LocalCardString localCardString;
+
+    public Card(LocalString.LocalCardString localCardString) {
+        this.localCardString = localCardString;
+        this.cost = this.finalCost = localCardString.cost;
+        this.health = this.healthMax = this.finalHealth = localCardString.health;
+    }
 
 }

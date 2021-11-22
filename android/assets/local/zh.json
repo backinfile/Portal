@@ -2,7 +2,7 @@
   "cards": [
     {
       "sn": "Virus",
-      "name": "病毒Virus",
+      "name": "病毒",
       "cardType": "Virus",
       "cost": 0,
       "health": 2,

@@ -20,7 +20,7 @@ public class GenImage {
     private static void genCardBoarder() {
         int width = Settings.CARD_WIDTH;
         int height = Settings.CARD_HEIGHT;
-        int borderWidth = width / 100;
+        int borderWidth = width / 60;
         int borderWidth2 = borderWidth * 2;
 
         Pixmap pixmap = new Pixmap(width, height, Pixmap.Format.RGBA8888);
@@ -29,6 +29,9 @@ public class GenImage {
         drawRoundCornerBorder(pixmap, Color.WHITE, width, height, borderWidth);
         pixmap.setColor(Color.GRAY);
         drawBorder(pixmap, width - borderWidth2, height - borderWidth2, borderWidth, borderWidth, borderWidth);
+
+//        pixmap.setColor(Color.WHITE);
+//        pixmap.fillRectangle(borderWidth2, height * 5 / 6, width / 10, borderWidth2);
 
         writeImageFile(pixmap, "cardBorder");
         pixmap.dispose();

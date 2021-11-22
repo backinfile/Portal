@@ -1,38 +1,41 @@
 package com.backinfile.portal.view.screens;
 
 import com.backinfile.portal.LocalString;
-import com.backinfile.portal.Log;
-import com.backinfile.portal.Res;
 import com.backinfile.portal.model.Card;
+import com.backinfile.portal.view.group.CardSize;
 import com.backinfile.portal.view.group.CardView;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.utils.Align;
 
 public class GameStage extends Stage {
     public GameStage() {
-        Card card = new Card();
-        card.localCardString = LocalString.getCardString("virus");
+        Card card = new Card(LocalString.getCardString("virus"));
 
-        CardView cardView = new CardView();
-        cardView.setCard(card);
-        cardView.setPosition(Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f, Align.center);
-        cardView.scaleBy(2f);
+        {
+            CardView cardView = new CardView();
+            cardView.setCard(card);
+            CardView.CardViewState cardViewState = new CardView.CardViewState();
+            cardViewState.x = CardSize.Normal.getWidth();
+            cardView.setCardViewState(cardViewState);
+            addActor(cardView);
+        }
 
-        cardView.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                super.clicked(event, x, y);
-                Log.game.info("clicked");
-            }
-        });
-
-        addActor(cardView);
-
-        addActor(new Label("asdsaf病毒", new Label.LabelStyle(Res.DefaultFont, Color.BLACK)));
+        {
+            CardView cardView = new CardView();
+            cardView.setCard(card);
+            CardView.CardViewState cardViewState = new CardView.CardViewState();
+            cardViewState.x = CardSize.Normal.getWidth() * 2 + CardSize.Large.getWidth();
+            cardViewState.cardSize = CardSize.Large;
+            cardView.setCardViewState(cardViewState);
+            addActor(cardView);
+        }
+        {
+            CardView cardView = new CardView();
+            cardView.setCard(card);
+            CardView.CardViewState cardViewState = new CardView.CardViewState();
+            cardViewState.x = CardSize.Normal.getWidth() * 2 + CardSize.Large.getWidth() * 2 + CardSize.LargeLarge.getWidth();
+            cardViewState.cardSize = CardSize.LargeLarge;
+            cardView.setCardViewState(cardViewState);
+            addActor(cardView);
+        }
     }
 }

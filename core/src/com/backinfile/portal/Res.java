@@ -1,6 +1,7 @@
 package com.backinfile.portal;
 
 import com.alibaba.fastjson.JSONObject;
+import com.backinfile.portal.view.group.CardSize;
 import com.backinfile.support.FontCharacterCollection;
 import com.backinfile.support.reflection.Timing;
 import com.badlogic.gdx.Gdx;
@@ -27,10 +28,10 @@ public class Res {
     public static TextureRegionDrawable TEX_BLACK_MASK;
     public static TextureRegionDrawable EMPTY_DRAWABLE;
 
-    public static BitmapFont DefaultFontSmallSmall;
     public static BitmapFont DefaultFontSmall;
     public static BitmapFont DefaultFontLarge;
     public static BitmapFont DefaultFont;
+    public static BitmapFont DefaultFontLargeLarge;
     private static final FontCharacterCollection fontCharacterCollection = new FontCharacterCollection();
     private static final Map<String, Texture> textureMap = new HashMap<>(); // path->image
     private static final Map<LocalString.LocalImagePathString, TextureRegionDrawable> cardImageMap = new HashMap<>();
@@ -120,17 +121,33 @@ public class Res {
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         fontCharacterCollection.put(FreeTypeFontGenerator.DEFAULT_CHARS);
         parameter.characters = fontCharacterCollection.getAll();
-        parameter.borderWidth = 0.1f;
+        parameter.borderWidth = 0.2f;
 
-        parameter.size = 12;
-        DefaultFontSmallSmall = generator.generateFont(parameter);
-        parameter.size = 16;
+        float fontSize = GlobalSize.FONT_DEFAULT_SIZE;
+
+        parameter.size = (int) (fontSize * GlobalSize.CARD_SMALL_SCALE);
         DefaultFontSmall = generator.generateFont(parameter);
-        parameter.size = 20;
+        parameter.size = (int) (fontSize * GlobalSize.CARD_NORMAL_SCALE);
         DefaultFont = generator.generateFont(parameter);
-//		parameter.size = 24;
-//		DefaultFontLarge = generator.generateFont(parameter);
+        parameter.size = (int) (fontSize * GlobalSize.CARD_LARGE_SCALE);
+        DefaultFontLarge = generator.generateFont(parameter);
+        parameter.size = (int) (fontSize * GlobalSize.CARD_LARGE_LARGE_SCALE);
+        DefaultFontLargeLarge = generator.generateFont(parameter);
         generator.dispose();
+    }
+
+    public static BitmapFont getNearBitmapFont(CardSize cardSize) {
+        switch (cardSize) {
+            case Normal:
+                return DefaultFont;
+            case Small:
+                return DefaultFontSmall;
+            case Large:
+                return DefaultFontLarge;
+            case LargeLarge:
+                return DefaultFontLargeLarge;
+        }
+        return DefaultFont;
     }
 
 
@@ -141,9 +158,6 @@ public class Res {
         for (Texture texture : textureToDispose) {
             texture.dispose();
         }
-        if (DefaultFontSmallSmall != null) {
-            DefaultFontSmallSmall.dispose();
-        }
         if (DefaultFontSmall != null) {
             DefaultFontSmall.dispose();
         }
@@ -152,6 +166,9 @@ public class Res {
         }
         if (DefaultFontLarge != null) {
             DefaultFontLarge.dispose();
+        }
+        if (DefaultFontLargeLarge != null) {
+            DefaultFontLargeLarge.dispose();
         }
     }
 }

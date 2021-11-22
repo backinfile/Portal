@@ -36,4 +36,32 @@ public enum CardSize {
         }
         return GlobalSize.CARD_HEIGHT;
     }
+
+    public float getScale() {
+        switch (this) {
+            case Normal:
+                return GlobalSize.CARD_NORMAL_SCALE;
+            case Small:
+                return GlobalSize.CARD_SMALL_SCALE;
+            case Large:
+                return GlobalSize.CARD_LARGE_SCALE;
+            case LargeLarge:
+                return GlobalSize.CARD_LARGE_LARGE_SCALE;
+        }
+        return GlobalSize.CARD_NORMAL_SCALE;
+    }
+
+    public float getFontHeight() {
+        switch (this) {
+            case Normal:
+                return GlobalSize.CARD_NORMAL_SCALE * GlobalSize.FONT_DEFAULT_SIZE;
+            case Small:
+                return GlobalSize.CARD_SMALL_SCALE * GlobalSize.FONT_DEFAULT_SIZE;
+            case Large:
+                return GlobalSize.CARD_LARGE_SCALE * GlobalSize.FONT_DEFAULT_SIZE;
+            case LargeLarge:
+                return GlobalSize.CARD_LARGE_LARGE_SCALE * GlobalSize.FONT_DEFAULT_SIZE;
+        }
+        return GlobalSize.FONT_DEFAULT_SIZE;
+    }
 }
