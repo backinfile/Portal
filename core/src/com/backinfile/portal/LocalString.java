@@ -50,6 +50,10 @@ public class LocalString {
         Log.res.info("read image path string: {}", imagePathStringList.size());
     }
 
+    public static List<LocalImagePathString> getAllImagePathStrings() {
+        return imagePathStringList;
+    }
+
     public static class LocalCardString {
         public static LocalCardString EmptyString = new LocalCardString();
 

@@ -3,10 +3,7 @@ package com.backinfile.support;
 import com.backinfile.support.func.Function1;
 import com.backinfile.support.func.Predicate;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 public class StreamUtils {
     public static <T, R> List<R> map(Collection<T> collection, Function1<R, T> function) {
@@ -54,5 +51,12 @@ public class StreamUtils {
             iterator.next();
         }
         return iterator.next();
+    }
+
+    public static <K, V> V getOrDefault(Map<K, V> map, K key, V defaultValue) {
+        if (map.containsKey(key)) {
+            return map.get(key);
+        }
+        return defaultValue;
     }
 }

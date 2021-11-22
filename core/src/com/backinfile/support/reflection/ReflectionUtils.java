@@ -20,8 +20,6 @@ public class ReflectionUtils {
         return Modifier.isAbstract(clazz.getModifiers());
     }
 
-//	public static String PackageName = "com.backinfile";
-
     public static Set<Class<?>> getClassesExtendsClass(String packageName, Class<?> clazz) {
         Set<Class<?>> set = new HashSet<>();
         for (Class<?> type : getClasses(packageName)) {

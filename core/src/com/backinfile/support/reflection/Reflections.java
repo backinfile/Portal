@@ -5,27 +5,32 @@ import com.backinfile.support.log.UtilLog;
 import javassist.ClassPool;
 import javassist.CtClass;
 import javassist.CtMethod;
+import javassist.LoaderClassPath;
 
 import java.text.MessageFormat;
 
 public class Reflections {
 
     // 这个函数需要需改class文件，所以执行这个函数前尽量少加载类
-    public static void classRewriteInit(String packageName) {
+    public static void classRewriteInit(String packageName, ClassLoader... classLoaders) {
         ClassPool pool = ClassPool.getDefault();
+        for (ClassLoader classLoader : classLoaders) {
+            pool.appendClassPath(new LoaderClassPath(classLoader));
+        }
+
+
         for (String targetClassName : ReflectionUtils.getClassNames(packageName)) {
             try {
                 boolean needRewrite = false;
                 CtClass ctClass = pool.get(targetClassName);
-                needRewrite |= timingRewrite(pool, ctClass);
+                needRewrite = timingRewrite(pool, ctClass);
                 needRewrite |= invokeLogRewrite(pool, ctClass);
-                if (!needRewrite) {
-                    continue;
+                if (needRewrite) {
+                    ctClass.toClass();
+                    UtilLog.reflection.info("rewrite class {}", targetClassName);
                 }
-                ctClass.toClass();
-                UtilLog.reflection.info("rewrite class {}", targetClassName);
             } catch (Exception e) {
-                UtilLog.reflection.error("error in rewrite class {}, {}", targetClassName, e.getMessage());
+                UtilLog.reflection.error(e, "error in rewrite class {}", targetClassName);
             }
         }
     }

@@ -1,9 +1,9 @@
 buildscript {
-    
+
 
     repositories {
         mavenLocal()
-        maven{ url 'https://maven.aliyun.com/repository/public'}
+        maven { url 'https://maven.aliyun.com/repository/public' }
         mavenCentral()
         gradlePluginPortal()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
@@ -11,7 +11,7 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:4.0.0'
-        
+
 
     }
 }
@@ -50,7 +50,7 @@ project(":desktop") {
         api "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
         api "com.badlogicgames.gdx:gdx-tools:$gdxVersion"
         api "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-desktop"
-        
+
     }
 }
 
@@ -85,7 +85,8 @@ project(":core") {
 
         implementation group: 'com.alibaba', name: 'fastjson', version: '1.2.78'
         implementation group: 'org.freemarker', name: 'freemarker', version: '2.3.31'
-        implementation group: 'org.javassist', name: 'javassist', version: '3.15.0-GA'
+        implementation group: 'org.javassist', name: 'javassist', version: '3.28.0-GA'
+
 
     }
 }

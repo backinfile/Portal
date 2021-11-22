@@ -1,4 +1,6 @@
 package com.backinfile.portal.view.screens;
 
-public class GameScreen {
+import com.backinfile.gdxSupport.DefaultScreen;
+
+public class GameScreen extends DefaultScreen {
 }
