@@ -27,7 +27,7 @@ public class MainGame extends DefaultGame {
             GenImage.gen();
         }
 
-        GlobalSize.init();
+        ScreenSize.init();
         Res.init();
 
         setScreen(GameScreen.class);

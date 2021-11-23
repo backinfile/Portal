@@ -18,6 +18,9 @@
       "images": [
         {
           "path": "image/gen/cardBorder.png"
+        },
+        {
+          "path": "image/gen/cardDecorate.png"
         }
       ]
     }

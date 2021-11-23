@@ -1,7 +1,7 @@
 package com.backinfile.portal.gen;
 
 import com.backinfile.portal.Log;
-import com.backinfile.portal.Settings;
+import com.backinfile.portal.ScreenSize;
 import com.backinfile.support.reflection.Timing;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -15,19 +15,20 @@ public class GenImage {
     public static void gen() {
         genCardBoarder();
         genVirus();
+        genCardDecorate();
     }
 
     private static void genCardBoarder() {
-        int width = Settings.CARD_WIDTH;
-        int height = Settings.CARD_HEIGHT;
-        int borderWidth = width / 60;
+        int width = ScreenSize.SCREEN_CARD_WIDTH;
+        int height = ScreenSize.SCREEN_CARD_HEIGHT;
+        int borderWidth = (int) (ScreenSize.SCREEN_CARD_WIDTH * ScreenSize.CARD_BOARD_WIDTH_RATE);
         int borderWidth2 = borderWidth * 2;
 
         Pixmap pixmap = new Pixmap(width, height, Pixmap.Format.RGBA8888);
         pixmap.setBlending(Pixmap.Blending.None);
 
-        drawRoundCornerBorder(pixmap, Color.WHITE, width, height, borderWidth);
-        pixmap.setColor(Color.GRAY);
+        drawRoundCornerBorder(pixmap, new Color(0, 0, 0, 0.8f), width, height, borderWidth);
+        pixmap.setColor(Color.WHITE);
         drawBorder(pixmap, width - borderWidth2, height - borderWidth2, borderWidth, borderWidth, borderWidth);
 
 //        pixmap.setColor(Color.WHITE);
@@ -39,8 +40,8 @@ public class GenImage {
     }
 
     private static void genVirus() {
-        int width = Settings.CARD_WIDTH;
-        int height = Settings.CARD_HEIGHT;
+        int width = ScreenSize.SCREEN_CARD_WIDTH;
+        int height = ScreenSize.SCREEN_CARD_HEIGHT;
         Pixmap pixmap = new Pixmap(width, height, Pixmap.Format.RGBA8888);
         pixmap.setColor(Color.SKY);
         pixmap.fill();
@@ -48,6 +49,18 @@ public class GenImage {
         writeImageFile(pixmap, "virus");
         pixmap.dispose();
         Log.res.info("gen image: virus");
+    }
+
+    private static void genCardDecorate() {
+        int size = ScreenSize.SCREEN_CARD_DECORATE_SIZE;
+
+        Pixmap pixmap = new Pixmap(size, size, Pixmap.Format.RGBA8888);
+        pixmap.setColor(new Color(0.5f, 0.5f, 0.5f, 0.5f));
+        pixmap.fill();
+
+        writeImageFile(pixmap, "cardDecorate");
+        pixmap.dispose();
+        Log.res.info("gen image: cardDecorate");
     }
 
     private static void drawRoundCornerBorder(Pixmap pixmap, Color color, int width, int height, int borderWidth) {

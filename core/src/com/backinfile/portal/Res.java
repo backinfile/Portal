@@ -1,7 +1,7 @@
 package com.backinfile.portal;
 
 import com.alibaba.fastjson.JSONObject;
-import com.backinfile.portal.view.group.CardSize;
+import com.backinfile.portal.view.actor.CardSize;
 import com.backinfile.support.FontCharacterCollection;
 import com.backinfile.support.reflection.Timing;
 import com.badlogic.gdx.Gdx;
@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
@@ -54,6 +55,10 @@ public class Res {
         }
         Log.res.warn("missing texture for {}", JSONObject.toJSONString(imagePathString));
         return EMPTY_DRAWABLE;
+    }
+
+    public static Sprite newSprite(LocalString.LocalImagePathString imagePathString) {
+        return new Sprite(getTexture(imagePathString).getRegion());
     }
 
     private static void initImage() {
@@ -117,22 +122,25 @@ public class Res {
 
     @Timing
     private static void initFont() {
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("font/SourceHanSans-Light.otf"));
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("font/SourceHanSans-Medium.otf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         fontCharacterCollection.put(FreeTypeFontGenerator.DEFAULT_CHARS);
         parameter.characters = fontCharacterCollection.getAll();
-        parameter.borderWidth = 0.2f;
+        parameter.borderWidth = 0.0f;
+        parameter.shadowColor = new Color(0, 0, 0, 0.25f);
+        parameter.shadowOffsetX = 2;
+        parameter.minFilter = Texture.TextureFilter.Linear;
+        parameter.magFilter = Texture.TextureFilter.Linear;
 
-        float fontSize = GlobalSize.FONT_DEFAULT_SIZE;
 
-        parameter.size = (int) (fontSize * GlobalSize.CARD_SMALL_SCALE);
-        DefaultFontSmall = generator.generateFont(parameter);
-        parameter.size = (int) (fontSize * GlobalSize.CARD_NORMAL_SCALE);
+//        parameter.size = (int) (fontSize * ScreenSize.CARD_SMALL_SCALE);
+//        DefaultFontSmall = generator.generateFont(parameter);
+        parameter.size = (int) (ScreenSize.FONT_DEFAULT_SIZE);
         DefaultFont = generator.generateFont(parameter);
-        parameter.size = (int) (fontSize * GlobalSize.CARD_LARGE_SCALE);
-        DefaultFontLarge = generator.generateFont(parameter);
-        parameter.size = (int) (fontSize * GlobalSize.CARD_LARGE_LARGE_SCALE);
-        DefaultFontLargeLarge = generator.generateFont(parameter);
+//        parameter.size = (int) (fontSize * ScreenSize.CARD_LARGE_SCALE);
+//        DefaultFontLarge = generator.generateFont(parameter);
+//        parameter.size = (int) (fontSize * ScreenSize.CARD_LARGE_LARGE_SCALE);
+//        DefaultFontLargeLarge = generator.generateFont(parameter);
         generator.dispose();
     }
 
