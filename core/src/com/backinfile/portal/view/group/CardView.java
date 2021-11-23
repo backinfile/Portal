@@ -1,41 +1,36 @@
-package com.backinfile.portal.view.actor;
+package com.backinfile.portal.view.group;
 
 import com.backinfile.portal.LocalString;
 import com.backinfile.portal.Res;
 import com.backinfile.portal.model.Card;
 import com.backinfile.portal.model.CardType;
+import com.backinfile.portal.view.actor.CardSize;
 import com.backinfile.support.Utils;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Align;
 
-public class CardView extends Actor {
+public class CardView extends Group {
     public static final LocalString.LocalUIString uiString = LocalString.getUIString("card");
 
 
     private Card card;
     private CardViewState cardViewState;
-
     private Integer health = null;
 
-
-    private final AutoGroup autoGroup = new AutoGroup();
-    private final AutoLabel titleText = new AutoLabel();
-    private AutoLabel healthText = new AutoLabel();
-    private AutoImage mainImage = new AutoImage();
-    private AutoImage borderImage = new AutoImage();
+    private Label titleLabel = new Label("", new Label.LabelStyle(Res.DefaultFont, Color.BLACK));
+    private Label healthLabel = new Label("", new Label.LabelStyle(Res.DefaultFont, Color.BLACK));
+    private Image mainImage = new Image();
+    private Image borderImage = new Image();
 
     public CardView() {
-        mainImage.setVisible(false);
-        borderImage.setVisible(false);
-        titleText.setVisible(false);
-        healthText.setVisible(false);
-        autoGroup.addActor(mainImage);
-        autoGroup.addActor(borderImage);
-        autoGroup.addActor(titleText);
-        autoGroup.addActor(healthText);
+        addActor(mainImage);
+        addActor(borderImage);
+        addActor(healthLabel);
+        addActor(titleLabel);
     }
 
     public static class CardViewState {
@@ -48,10 +43,8 @@ public class CardView extends Actor {
 
     public void setCard(Card card) {
         this.card = card;
-        borderImage.setTexture(Res.newSprite(uiString.images[0]));
-        borderImage.setVisible(true);
-        mainImage.setTexture(Res.newSprite(card.localCardString.image));
-        mainImage.setVisible(true);
+        borderImage.setDrawable(Res.getTexture(uiString.images[0]));
+        mainImage.setDrawable(Res.getTexture(card.localCardString.image));
 
         switch (card.localCardString.cardType) {
             case Virus: {
@@ -77,8 +70,8 @@ public class CardView extends Actor {
         setOrigin(Align.center);
         setPosition(cardViewState.x, cardViewState.y, Align.center);
 
-        borderImage.setBounds(getX(), getY(), getWidth(), getHeight());
-        mainImage.setBounds(getX(), getY(), getWidth(), getHeight());
+        borderImage.setBounds(0, 0, getWidth(), getHeight());
+        mainImage.setBounds(0, 0, getWidth(), getHeight());
 
         setTitle(card.localCardString.name);
 
@@ -91,12 +84,14 @@ public class CardView extends Actor {
 
     public void setTitle(String text) {
         if (Utils.isNullOrEmpty(text)) {
-            titleText.setVisible(false);
+            titleLabel.setVisible(false);
         } else {
-            titleText.setFontScale(cardViewState.cardSize.getScale());
-            titleText.setBound(getX(), getY() + getHeight() * 0.02f, getWidth(), titleText.getFontSize(), Align.center, false);
-            titleText.setText(text);
-            titleText.setVisible(true);
+            titleLabel.setFontScale(cardViewState.cardSize.getScale());
+            titleLabel.setAlignment(Align.center);
+            titleLabel.setWrap(false);
+            titleLabel.setBounds(0, getHeight() * 0.02f, getWidth(), cardViewState.cardSize.getFontSize());
+            titleLabel.setText(text);
+            titleLabel.setVisible(true);
         }
     }
 
@@ -104,30 +99,17 @@ public class CardView extends Actor {
         this.health = healthPoint;
         if (health != null) {
             health = Math.max(0, health);
-            healthText.setText(health.toString());
-            healthText.setFontScale(cardViewState.cardSize.getNext().getScale());
-            healthText.setBound(getX() + getWidth() * 0.1f, getY() + getHeight() * 0.9f - healthText.getFontSize(), getWidth(), healthText.getFontSize(), Align.left, false);
-            healthText.setVisible(true);
+            CardSize cardSize = cardViewState.cardSize.getNext();
+            healthLabel.setFontScale(cardSize.getScale());
+            healthLabel.setAlignment(Align.left);
+            healthLabel.setWrap(false);
+            healthLabel.setBounds(getWidth() * 0.1f, getHeight() * 0.9f - cardSize.getFontSize(), getWidth(), cardSize.getFontSize());
+            healthLabel.setText(health.toString());
+            healthLabel.setVisible(true);
         } else {
-            healthText.setVisible(false);
+            healthLabel.setVisible(false);
         }
     }
-
-    @Override
-    public void act(float delta) {
-        super.act(delta);
-
-        autoGroup.act(delta);
-    }
-
-    @Override
-    public void draw(Batch batch, float parentAlpha) {
-        if (card == null) {
-            return;
-        }
-        autoGroup.draw(batch, parentAlpha);
-    }
-
 
     private float getHealthDecorateOffsetX() {
         return cardViewState.cardSize.getDecorateSize() * 0.2f;

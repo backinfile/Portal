@@ -51,7 +51,7 @@ public enum CardSize {
         return ScreenSize.CARD_NORMAL_SCALE;
     }
 
-    public float getFontHeight() {
+    public float getFontSize() {
         switch (this) {
             case Normal:
                 return ScreenSize.CARD_NORMAL_SCALE * ScreenSize.FONT_DEFAULT_SIZE;

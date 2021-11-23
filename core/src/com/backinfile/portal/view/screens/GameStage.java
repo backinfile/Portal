@@ -3,7 +3,7 @@ package com.backinfile.portal.view.screens;
 import com.backinfile.portal.LocalString;
 import com.backinfile.portal.model.Card;
 import com.backinfile.portal.view.actor.CardSize;
-import com.backinfile.portal.view.actor.CardView;
+import com.backinfile.portal.view.group.CardView;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
 public class GameStage extends Stage {
