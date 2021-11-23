@@ -8,6 +8,8 @@ public class Settings {
 
     private static final boolean DEV = true;
 
+    public static final long BASE_TIME_DURATION = 200;
+
 
     public static boolean inDev() {
         if (Gdx.app == null) {

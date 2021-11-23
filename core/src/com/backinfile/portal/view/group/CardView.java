@@ -6,7 +6,6 @@ import com.backinfile.portal.model.Card;
 import com.backinfile.portal.model.CardType;
 import com.backinfile.portal.view.actor.CardSize;
 import com.backinfile.support.Utils;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -36,9 +35,11 @@ public class CardView extends Group {
     public static class CardViewState {
         public static final CardViewState Normal = new CardViewState();
 
-        public float x = Gdx.graphics.getWidth() / 2f;
-        public float y = Gdx.graphics.getHeight() / 2f;
+        public float x = 0;
+        public float y = 0;
         public CardSize cardSize = CardSize.Normal;
+        public float scale = 1f;
+        public Color color = Color.WHITE;
     }
 
     public void setCard(Card card) {
@@ -68,10 +69,13 @@ public class CardView extends Group {
         this.cardViewState = cardViewState;
         setSize(cardViewState.cardSize.getWidth(), cardViewState.cardSize.getHeight());
         setOrigin(Align.center);
+        setScale(cardViewState.scale);
         setPosition(cardViewState.x, cardViewState.y, Align.center);
+        setColor(cardViewState.color);
 
         borderImage.setBounds(0, 0, getWidth(), getHeight());
         mainImage.setBounds(0, 0, getWidth(), getHeight());
+        mainImage.setColor(cardViewState.color);
 
         setTitle(card.localCardString.name);
 
@@ -89,7 +93,7 @@ public class CardView extends Group {
             titleLabel.setFontScale(cardViewState.cardSize.getScale());
             titleLabel.setAlignment(Align.center);
             titleLabel.setWrap(false);
-            titleLabel.setBounds(0, getHeight() * 0.02f, getWidth(), cardViewState.cardSize.getFontSize());
+            titleLabel.setBounds(0, getHeight() * 0.03f, getWidth(), cardViewState.cardSize.getFontSize());
             titleLabel.setText(text);
             titleLabel.setVisible(true);
         }
@@ -99,11 +103,14 @@ public class CardView extends Group {
         this.health = healthPoint;
         if (health != null) {
             health = Math.max(0, health);
-            CardSize cardSize = cardViewState.cardSize.getNext();
-            healthLabel.setFontScale(cardSize.getScale());
+            CardSize cardSize = cardViewState.cardSize;
+            float scale = 2f;
+            float fontScale = cardSize.getScale() * scale;
+            float fontSize = cardSize.getFontSize() * scale;
+            healthLabel.setFontScale(fontScale);
             healthLabel.setAlignment(Align.left);
             healthLabel.setWrap(false);
-            healthLabel.setBounds(getWidth() * 0.1f, getHeight() * 0.9f - cardSize.getFontSize(), getWidth(), cardSize.getFontSize());
+            healthLabel.setBounds(getWidth() * 0.1f, getHeight() * 0.9f - fontSize, getWidth(), fontSize);
             healthLabel.setText(health.toString());
             healthLabel.setVisible(true);
         } else {

@@ -62,4 +62,12 @@ public class ActionQueue<Action extends IAction> implements IAlive {
     public boolean isEmpty() {
         return curAction == null && actions.isEmpty();
     }
+
+    public void addLast(Action action) {
+        actions.addLast(action);
+    }
+
+    public void addFirst(Action action) {
+        actions.addFirst(action);
+    }
 }

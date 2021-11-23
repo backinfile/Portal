@@ -6,8 +6,8 @@ public class ScreenSize {
     public static final int SCREEN_WIDTH = 1334;
     public static final int SCREEN_HEIGHT = 750;
 
-    public static final int SCREEN_CARD_WIDTH = 600;
-    public static final int SCREEN_CARD_HEIGHT = 800;
+    public static final int SCREEN_CARD_WIDTH = 630;
+    public static final int SCREEN_CARD_HEIGHT = 880;
 
     public static final int SCREEN_CARD_DECORATE_SIZE = SCREEN_CARD_WIDTH / 5;
 
