@@ -13,12 +13,17 @@ public class GenImage {
 
     @Timing("gen image")
     public static void gen() {
-        genCardBoarder();
+        genCardBoarder(Color.WHITE, "cardBorder");
+        genCardBoarder(Color.FIREBRICK, "cardBorderVirus");
+        genCardBoarder(Color.BLUE, "cardBorderCommand");
+        genCardBoarder(Color.LIGHT_GRAY, "cardBorderData");
+        genCardBoarder(Color.ROYAL, "cardBorderPlugin");
+        genCardBoarder(Color.SCARLET, "cardBorderError");
         genVirus();
         genCardDecorate();
     }
 
-    private static void genCardBoarder() {
+    private static void genCardBoarder(Color color, String name) {
         int width = ScreenSize.SCREEN_CARD_WIDTH;
         int height = ScreenSize.SCREEN_CARD_HEIGHT;
         int borderWidth = (int) (ScreenSize.SCREEN_CARD_WIDTH * ScreenSize.CARD_BOARD_WIDTH_RATE);
@@ -27,16 +32,16 @@ public class GenImage {
         Pixmap pixmap = new Pixmap(width, height, Pixmap.Format.RGBA8888);
         pixmap.setBlending(Pixmap.Blending.None);
 
-        drawRoundCornerBorder(pixmap, new Color(0, 0, 0, 0.8f), width, height, borderWidth);
-        pixmap.setColor(Color.WHITE);
-        drawBorder(pixmap, width - borderWidth2, height - borderWidth2, borderWidth, borderWidth, borderWidth);
+        drawRoundCornerBorder(pixmap, color, width, height, borderWidth);
+//        pixmap.setColor(Color.WHITE);
+//        drawBorder(pixmap, width - borderWidth2, height - borderWidth2, borderWidth, borderWidth, borderWidth);
 
 //        pixmap.setColor(Color.WHITE);
 //        pixmap.fillRectangle(borderWidth2, height * 5 / 6, width / 10, borderWidth2);
 
-        writeImageFile(pixmap, "cardBorder");
+        writeImageFile(pixmap, name);
         pixmap.dispose();
-        Log.res.info("gen image: card boarder");
+        Log.res.info("gen image: " + name);
     }
 
     private static void genVirus() {

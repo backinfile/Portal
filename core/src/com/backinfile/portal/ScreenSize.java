@@ -12,7 +12,7 @@ public class ScreenSize {
     public static final int SCREEN_CARD_DECORATE_SIZE = SCREEN_CARD_WIDTH / 5;
 
 
-    public static final float CARD_BOARD_WIDTH_RATE = 1 / 50f;
+    public static final float CARD_BOARD_WIDTH_RATE = 1 / 30f;
 
 
     public static float STAGE_WIDTH;
@@ -28,7 +28,7 @@ public class ScreenSize {
     public static float CARD_HEIGHT_S;
 
     public static final float CARD_SMALL_SCALE = 0.3f;
-    public static final float CARD_NORMAL_SCALE = 0.4f;
+    public static final float CARD_NORMAL_SCALE = 0.5f;
     public static final float CARD_LARGE_SCALE = 1f;
     public static final float CARD_LARGE_LARGE_SCALE = 1.2f;
 
@@ -40,10 +40,11 @@ public class ScreenSize {
 
         float height = Gdx.graphics.getHeight() * 0.8f;
         float width = height * SCREEN_CARD_WIDTH / SCREEN_CARD_HEIGHT;
-        CARD_HEIGHT = height * CARD_NORMAL_SCALE;
-        CARD_WIDTH = width * CARD_NORMAL_SCALE;
+
         CARD_HEIGHT_S = height * CARD_SMALL_SCALE;
         CARD_WIDTH_S = width * CARD_SMALL_SCALE;
+        CARD_HEIGHT = height * CARD_NORMAL_SCALE;
+        CARD_WIDTH = width * CARD_NORMAL_SCALE;
         CARD_HEIGHT_L = height * CARD_LARGE_SCALE;
         CARD_WIDTH_L = width * CARD_LARGE_SCALE;
         CARD_HEIGHT_LL = height * CARD_LARGE_LARGE_SCALE;

@@ -1,5 +1,7 @@
 package com.backinfile.portal.model;
 
+import com.backinfile.portal.view.effects.Effect;
+
 public class EmptyEffectContainer implements IEffectContainer {
     @Override
     public void add(Effect effect) {

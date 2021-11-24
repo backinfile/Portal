@@ -1,20 +1,21 @@
 package com.backinfile.gdxSupport;
 
+import com.backinfile.portal.Log;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
-import com.badlogic.gdx.math.Intersector;
-import com.badlogic.gdx.math.Matrix4;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.math.collision.Ray;
 
 import java.util.List;
 
 public class GdxUtils {
     public static final Matrix4 IdentityMatrix = new Matrix4();
+    public static final float THRESHOLD = 0.01f;
+    public static final float THRESHOLD2 = 0.001f;
 
     private static final GlyphLayout glyphLayoutTmp = new GlyphLayout();
     private static final Matrix4 matrix4Tmp = new Matrix4();
@@ -59,5 +60,19 @@ public class GdxUtils {
             }
         }
         return curInstance;
+    }
+
+    public static float lerpStep(float from, float to) {
+        float deltaTime = Gdx.graphics.getDeltaTime();
+        float target = MathUtils.lerp(from, to, 0.1f);
+        Log.game.info("from {} to {} result {}", from, to, target);
+        if (Math.abs(to - target) < THRESHOLD) {
+            return to;
+        }
+        return target;
+    }
+
+    public static boolean isSame(float a, float b) {
+        return Math.abs(a - b) < THRESHOLD;
     }
 }

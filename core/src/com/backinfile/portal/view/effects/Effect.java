@@ -1,13 +1,26 @@
-package com.backinfile.portal.model;
+package com.backinfile.portal.view.effects;
 
+import com.backinfile.portal.Settings;
+import com.backinfile.portal.model.Board;
+import com.backinfile.portal.model.Human;
+import com.backinfile.portal.view.group.IBoardView;
+import com.backinfile.support.AutoSet;
 import com.backinfile.support.IAction;
 
 public abstract class Effect implements IAction {
+    @AutoSet
+    public Board board;
+    @AutoSet
+    public Human human;
+    @AutoSet
+    public IBoardView boardView;
+
     private boolean done = false;
     private long duration, curDuration;
 
-    public Effect(long duration) {
-        this.duration = duration;
+
+    public Effect() {
+        this.duration = Settings.BASE_TIME_DURATION;
     }
 
     @Override
@@ -21,7 +34,7 @@ public abstract class Effect implements IAction {
             aniStart();
             aniUpdate();
         }
-        
+
         curDuration = Math.max(0, curDuration - timeDelta);
         aniUpdate();
 

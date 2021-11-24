@@ -55,6 +55,7 @@ public class LocalString {
     }
 
     public static LocalCardString getCardString(String sn) {
+        sn = sn.toLowerCase();
         if (cardStringMap.containsKey(sn)) {
             return cardStringMap.get(sn);
         }
@@ -63,6 +64,7 @@ public class LocalString {
     }
 
     public static LocalSkillString getSkillString(String sn) {
+        sn = sn.toLowerCase();
         if (skillStringMap.containsKey(sn)) {
             return skillStringMap.get(sn);
         }
@@ -71,6 +73,7 @@ public class LocalString {
     }
 
     public static LocalUIString getUIString(String sn) {
+        sn = sn.toLowerCase();
         if (uiStringMap.containsKey(sn)) {
             return uiStringMap.get(sn);
         }

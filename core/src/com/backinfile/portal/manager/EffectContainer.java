@@ -1,5 +1,7 @@
-package com.backinfile.portal.model;
+package com.backinfile.portal.manager;
 
+import com.backinfile.portal.model.IEffectContainer;
+import com.backinfile.portal.view.effects.Effect;
 import com.backinfile.support.func.Action1;
 
 import java.util.Iterator;

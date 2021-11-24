@@ -1,9 +1,49 @@
 {
   "cards": [
     {
-      "sn": "Virus",
+      "sn": "Test1",
       "name": "病毒",
       "cardType": "Virus",
+      "cost": 0,
+      "health": 2,
+      "image": {
+        "path": "image/gen/virus.png"
+      }
+    },
+    {
+      "sn": "Test2",
+      "name": "指令",
+      "cardType": "Command",
+      "cost": 0,
+      "health": 2,
+      "image": {
+        "path": "image/gen/virus.png"
+      }
+    },
+    {
+      "sn": "Test3",
+      "name": "数据",
+      "cardType": "Data",
+      "cost": 0,
+      "health": 2,
+      "image": {
+        "path": "image/gen/virus.png"
+      }
+    },
+    {
+      "sn": "Test4",
+      "name": "插件",
+      "cardType": "Plugin",
+      "cost": 0,
+      "health": 2,
+      "image": {
+        "path": "image/gen/virus.png"
+      }
+    },
+    {
+      "sn": "Test5",
+      "name": "错误",
+      "cardType": "Error",
       "cost": 0,
       "health": 2,
       "image": {
@@ -21,6 +61,39 @@
         },
         {
           "path": "image/gen/cardDecorate.png"
+        },
+        {
+          "path": "image/Magic_button_red.png"
+        },
+        {
+          "path": "image/Magic_button_green.png"
+        }
+      ]
+    },
+    {
+      "sn": "cardType",
+      "strs": [
+        "病毒",
+        "指令",
+        "数据",
+        "插件",
+        "错误"
+      ],
+      "images": [
+        {
+          "path": "image/gen/cardBorderVirus.png"
+        },
+        {
+          "path": "image/gen/cardBorderCommand.png"
+        },
+        {
+          "path": "image/gen/cardBorderData.png"
+        },
+        {
+          "path": "image/gen/cardBorderPlugin.png"
+        },
+        {
+          "path": "image/gen/cardBorderError.png"
         }
       ]
     }

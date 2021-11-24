@@ -1,10 +1,9 @@
 package com.backinfile.portal.model.effects;
 
-import com.backinfile.portal.model.Effect;
+import com.backinfile.portal.view.effects.Effect;
 
 public class WaitEffect extends Effect {
-    public WaitEffect(long duration) {
-        super(duration);
+    public WaitEffect() {
     }
 
     @Override

@@ -11,10 +11,12 @@ public class Board implements IAlive {
     private ActionQueue<GameAction> actionQueue;
     private IEffectContainer effectContainer;
 
-    public void init(IEffectContainer effectContainer) {
+    public void init(Human human, IEffectContainer effectContainer) {
+        this.human = human;
+
         actionQueue = new ActionQueue<>(action -> {
             action.board = this;
-            action.human = human;
+            action.human = this.human;
         });
 
         this.effectContainer = effectContainer;
@@ -34,14 +36,16 @@ public class Board implements IAlive {
 
     @Override
     public void dispose() {
+        actionQueue.clear();
+        effectContainer.clear();
 
     }
 
-    public void addFirst(GameAction gameAction) {
-        actionQueue.addFirst(gameAction);
+    public ActionQueue<GameAction> getActionQueue() {
+        return actionQueue;
     }
 
-    public void addLast(GameAction gameAction) {
-        actionQueue.addLast(gameAction);
+    public IEffectContainer getEffectContainer() {
+        return effectContainer;
     }
 }
