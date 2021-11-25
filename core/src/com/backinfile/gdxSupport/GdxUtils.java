@@ -1,6 +1,5 @@
 package com.backinfile.gdxSupport;
 
-import com.backinfile.portal.Log;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -65,7 +64,6 @@ public class GdxUtils {
     public static float lerpStep(float from, float to) {
         float deltaTime = Gdx.graphics.getDeltaTime();
         float target = MathUtils.lerp(from, to, 0.1f);
-        Log.game.info("from {} to {} result {}", from, to, target);
         if (Math.abs(to - target) < THRESHOLD) {
             return to;
         }

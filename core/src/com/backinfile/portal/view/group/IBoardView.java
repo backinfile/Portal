@@ -4,4 +4,8 @@ import com.backinfile.portal.model.Card;
 
 public interface IBoardView {
     CardView getCardView(Card card);
+
+    float getBoardWidth();
+
+    float getBoardHeight();
 }

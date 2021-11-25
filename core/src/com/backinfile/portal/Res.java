@@ -126,7 +126,7 @@ public class Res {
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         fontCharacterCollection.put(FreeTypeFontGenerator.DEFAULT_CHARS);
         parameter.characters = fontCharacterCollection.getAll();
-        parameter.borderWidth = 0.0f;
+        parameter.borderWidth = 0f;
         parameter.shadowColor = new Color(0, 0, 0, 0.25f);
         parameter.shadowOffsetX = 2;
         parameter.minFilter = Texture.TextureFilter.Linear;

@@ -5,8 +5,9 @@ import com.backinfile.support.IAlive;
 
 public class Board implements IAlive {
     public Human human;
-    public Source.ServerSource serverSource;
-    public Source.VirusSource virusSource;
+    public Source.ServerSource serverSource = new Source.ServerSource();
+    public Source.VirusSource virusSource = new Source.VirusSource();
+    public CardPile trashPile = new CardPile();
 
     private ActionQueue<GameAction> actionQueue;
     private IEffectContainer effectContainer;

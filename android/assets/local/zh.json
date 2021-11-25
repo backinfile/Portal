@@ -14,7 +14,7 @@
       "sn": "Test2",
       "name": "指令",
       "cardType": "Command",
-      "cost": 0,
+      "cost": 1,
       "health": 2,
       "image": {
         "path": "image/gen/virus.png"
@@ -24,7 +24,7 @@
       "sn": "Test3",
       "name": "数据",
       "cardType": "Data",
-      "cost": 0,
+      "cost": 2,
       "health": 2,
       "image": {
         "path": "image/gen/virus.png"
@@ -34,7 +34,7 @@
       "sn": "Test4",
       "name": "插件",
       "cardType": "Plugin",
-      "cost": 0,
+      "cost": 3,
       "health": 2,
       "image": {
         "path": "image/gen/virus.png"
@@ -44,8 +44,8 @@
       "sn": "Test5",
       "name": "错误",
       "cardType": "Error",
-      "cost": 0,
-      "health": 2,
+      "cost": 10,
+      "health": 0,
       "image": {
         "path": "image/gen/virus.png"
       }
@@ -57,16 +57,7 @@
       "sn": "card",
       "images": [
         {
-          "path": "image/gen/cardBorder.png"
-        },
-        {
           "path": "image/gen/cardDecorate.png"
-        },
-        {
-          "path": "image/Magic_button_red.png"
-        },
-        {
-          "path": "image/Magic_button_green.png"
         }
       ]
     },
@@ -94,6 +85,21 @@
         },
         {
           "path": "image/gen/cardBorderError.png"
+        }
+      ]
+    },
+    {
+      "sn": "resource",
+      "strs": [
+        "哈希",
+        "带宽"
+      ],
+      "images": [
+        {
+          "path": "image/Magic_button_red.png"
+        },
+        {
+          "path": "image/Magic_button_green.png"
         }
       ]
     }

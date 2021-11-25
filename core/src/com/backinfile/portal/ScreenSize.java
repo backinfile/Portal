@@ -9,7 +9,7 @@ public class ScreenSize {
     public static final int SCREEN_CARD_WIDTH = 630;
     public static final int SCREEN_CARD_HEIGHT = 880;
 
-    public static final int SCREEN_CARD_DECORATE_SIZE = SCREEN_CARD_WIDTH / 5;
+    public static final int SCREEN_CARD_DECORATE_SIZE = SCREEN_CARD_WIDTH / 6;
 
 
     public static final float CARD_BOARD_WIDTH_RATE = 1 / 30f;
@@ -32,11 +32,12 @@ public class ScreenSize {
     public static final float CARD_LARGE_SCALE = 1f;
     public static final float CARD_LARGE_LARGE_SCALE = 1.2f;
 
-    public static final float FONT_DEFAULT_SIZE = 36 * 2.5f;
+    public static final float FONT_DEFAULT_SIZE = 36 * 2f;
+
 
     public static void init() {
         STAGE_HEIGHT = Gdx.graphics.getHeight();
-        STAGE_WIDTH = STAGE_HEIGHT / 0.8f;
+        STAGE_WIDTH = Gdx.graphics.getWidth();
 
         float height = Gdx.graphics.getHeight() * 0.8f;
         float width = height * SCREEN_CARD_WIDTH / SCREEN_CARD_HEIGHT;

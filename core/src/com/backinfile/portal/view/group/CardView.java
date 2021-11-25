@@ -4,7 +4,6 @@ import com.backinfile.gdxSupport.GdxUtils;
 import com.backinfile.portal.LocalString;
 import com.backinfile.portal.Res;
 import com.backinfile.portal.model.Card;
-import com.backinfile.portal.model.CardType;
 import com.backinfile.portal.view.actor.CardSize;
 import com.backinfile.support.Utils;
 import com.badlogic.gdx.graphics.Color;
@@ -17,23 +16,39 @@ import com.badlogic.gdx.utils.Align;
 public class CardView extends Group {
     public static final LocalString.LocalUIString uiString = LocalString.getUIString("card");
     public static final LocalString.LocalUIString cardTypeString = LocalString.getUIString("cardType");
+    public static final LocalString.LocalUIString resourceString = LocalString.getUIString("resource");
 
 
-    private Card card;
+    private Card card = null;
     private CardViewState cardViewState;
     private CardViewState targetCardViewState = null;
-    private Integer health = null;
 
     private final Label titleLabel = new Label("", new Label.LabelStyle(Res.DefaultFont, Color.BLACK));
-    private final Label healthLabel = new Label("", new Label.LabelStyle(Res.DefaultFont, Color.BLACK));
     private final Image mainImage = new Image();
     private final Image borderImage = new Image();
+
+    private final Image healthIcon = new Image();
+    private final Label healthLabel = new Label("", new Label.LabelStyle(Res.DefaultFont, Color.WHITE));
+
+    private final Image costIcon = new Image();
+    private final Label costLabel = new Label("", new Label.LabelStyle(Res.DefaultFont, Color.WHITE));
 
     public CardView() {
         addActor(mainImage);
         addActor(borderImage);
+        addActor(healthIcon);
         addActor(healthLabel);
+        addActor(costIcon);
+        addActor(costLabel);
         addActor(titleLabel);
+
+        costIcon.setDrawable(Res.getTexture(resourceString.images[1]));
+        costIcon.setVisible(false);
+        costLabel.setVisible(false);
+
+        healthIcon.setDrawable(Res.getTexture(resourceString.images[0]));
+        healthIcon.setVisible(false);
+        healthLabel.setVisible(false);
 
         setSize(CardSize.Large.getWidth(), CardSize.Large.getHeight());
         setOrigin(Align.center);
@@ -67,12 +82,8 @@ public class CardView extends Group {
         setCardViewState(CardViewState.Normal);
         setTitle(card.localCardString.name);
 
-        if (card.localCardString.cardType == CardType.Virus) {
-            setHealth(card.finalHealth);
-        } else {
-            setHealth(null);
-        }
-
+        updateHealth();
+        updateCost();
     }
 
     public void setCardViewState(CardViewState cardViewState) {
@@ -109,22 +120,61 @@ public class CardView extends Group {
         }
     }
 
-    public void setHealth(Integer healthPoint) {
-        this.health = healthPoint;
-        if (health != null) {
-            health = Math.max(0, health);
+
+    public void updateHealth() {
+        int health = card.finalHealth;
+        if (health <= 0) {
+            healthLabel.setVisible(false);
+            healthIcon.setVisible(false);
+        } else {
             CardSize cardSize = CardSize.Large;
-            float scale = 2f;
+            float scale = 1.6f;
             float fontScale = cardSize.getScale() * scale;
             float fontSize = cardSize.getFontSize() * scale;
-            healthLabel.setFontScale(fontScale);
-            healthLabel.setAlignment(Align.left);
+            healthLabel.setFontScale(health < 10 ? fontScale : fontScale * 0.8f);
+            healthLabel.setAlignment(Align.center);
             healthLabel.setWrap(false);
-            healthLabel.setBounds(getWidth() * 0.1f, getHeight() * 0.9f - fontSize, getWidth(), fontSize);
-            healthLabel.setText(health.toString());
+            healthLabel.setBounds(getWidth() * 0.95f - fontSize, getHeight() * 0.95f - fontSize, fontSize, fontSize);
+            healthLabel.setText(health);
             healthLabel.setVisible(true);
+
+            float gap = fontSize / 6f;
+
+            healthIcon.setBounds(healthLabel.getX() - gap, healthLabel.getY() - gap,
+                    healthLabel.getWidth() + 2 * gap, healthLabel.getHeight() + 2 * gap);
+            healthIcon.setColor(new Color(1, 1, 1, 0.6f));
+            healthIcon.setVisible(true);
+        }
+    }
+
+    public void updateCost() {
+        int cost = card.finalCost;
+        int health = card.finalHealth;
+
+        if (cost <= 0) {
+            costLabel.setVisible(false);
+            costIcon.setVisible(false);
         } else {
-            healthLabel.setVisible(false);
+            CardSize cardSize = CardSize.Large;
+            float scale = 1.6f;
+            float fontScale = cardSize.getScale() * scale;
+            float fontSize = cardSize.getFontSize() * scale;
+            float gap = fontSize / 6f;
+
+            float heightOffset = health > 0 ? fontSize + gap : 0;
+
+            costLabel.setFontScale(cost < 10 ? fontScale : fontScale * 0.8f);
+            costLabel.setAlignment(Align.center);
+            costLabel.setWrap(false);
+            costLabel.setBounds(getWidth() * 0.95f - fontSize, getHeight() * 0.95f - fontSize - heightOffset, fontSize, fontSize);
+            costLabel.setText(cost);
+            costLabel.setVisible(true);
+
+
+            costIcon.setBounds(costLabel.getX() - gap, costLabel.getY() - gap,
+                    costLabel.getWidth() + 2 * gap, costLabel.getHeight() + 2 * gap);
+            costIcon.setColor(new Color(1, 1, 1, 0.6f));
+            costIcon.setVisible(true);
         }
     }
 
@@ -187,7 +237,5 @@ public class CardView extends Group {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
-
-        applyTransform(batch, computeTransform());
     }
 }
