@@ -96,10 +96,10 @@
       ],
       "images": [
         {
-          "path": "image/Magic_button_red.png"
+          "path": "image/gen/cardDecorateHealth.png"
         },
         {
-          "path": "image/Magic_button_green.png"
+          "path": "image/gen/cardDecorateCost.png"
         }
       ]
     }

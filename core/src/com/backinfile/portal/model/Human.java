@@ -11,9 +11,19 @@ public class Human {
     public int curEnergy = 0;
     public int curCombat = 0;
 
-    public CardPile drawPile;
-    public CardPile discardPile;
-    public CardPile handPile;
+    public CardPile drawPile = new CardPile();
+    public CardPile discardPile = new CardPile();
+    public CardPile handPile = new CardPile();
+
+    public CardPile slotPile = new CardPile();
+
+    public Human() {
+
+    }
+
+    public void init() {
+
+    }
 
 
     public void onTurnStart() {

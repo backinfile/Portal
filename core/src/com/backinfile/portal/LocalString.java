@@ -12,10 +12,10 @@ public class LocalString {
     private static final String LocalSkillStringKey = "skills";
     private static final String LocalUIStringKey = "ui";
 
-    private static Map<String, LocalCardString> cardStringMap = new HashMap<>();
-    private static Map<String, LocalSkillString> skillStringMap = new HashMap<>();
-    private static Map<String, LocalUIString> uiStringMap = new HashMap<>();
-    private static List<LocalImagePathString> imagePathStringList = new ArrayList<>();
+    private static final Map<String, LocalCardString> cardStringMap = new HashMap<>();
+    private static final Map<String, LocalSkillString> skillStringMap = new HashMap<>();
+    private static final Map<String, LocalUIString> uiStringMap = new HashMap<>();
+    private static final List<LocalImagePathString> imagePathStringList = new ArrayList<>();
 
     @Timing("init local string")
     public static void init(String localStringConf) {
@@ -63,6 +63,10 @@ public class LocalString {
         return LocalCardString.EmptyString;
     }
 
+    public static Collection<LocalCardString> getAllCardString() {
+        return cardStringMap.values();
+    }
+
     public static LocalSkillString getSkillString(String sn) {
         sn = sn.toLowerCase();
         if (skillStringMap.containsKey(sn)) {
@@ -87,11 +91,12 @@ public class LocalString {
         public String sn = "[SN]";
         public String name = "[NAME]";
         public CardType cardType = CardType.Data;
-        public int cost = 0;
-        public int health = 1;
+        public int copy = 1; // 卡池中有几张复制
+        public int star = 1; // 星级
         public String description = "[DESCRIPTION]";
         public String[] skills = null;
         public LocalImagePathString image = null;
+        public boolean test = false; // 非正式卡牌
     }
 
     public static class LocalSkillString {

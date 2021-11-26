@@ -2,6 +2,8 @@ package com.backinfile.portal;
 
 import com.backinfile.gdxSupport.DefaultGame;
 import com.backinfile.portal.gen.GenImage;
+import com.backinfile.portal.manager.CardManager;
+import com.backinfile.portal.manager.SkillManager;
 import com.backinfile.portal.view.screens.GameScreen;
 import com.backinfile.support.reflection.Reflections;
 
@@ -25,6 +27,8 @@ public class MainGame extends DefaultGame {
 
         ScreenSize.init();
         Res.init();
+        SkillManager.init();
+        CardManager.init();
 
         setScreen(GameScreen.class);
     }

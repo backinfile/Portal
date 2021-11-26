@@ -19,4 +19,8 @@ public enum CardType {
     public Color getColor() {
         return color;
     }
+
+    public boolean isMainType() {
+        return this == Command || this == Data || this == Plugin;
+    }
 }

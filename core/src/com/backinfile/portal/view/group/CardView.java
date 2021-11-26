@@ -138,7 +138,7 @@ public class CardView extends Group {
             healthLabel.setText(health);
             healthLabel.setVisible(true);
 
-            float gap = fontSize / 6f;
+            float gap = fontSize / 10f;
 
             healthIcon.setBounds(healthLabel.getX() - gap, healthLabel.getY() - gap,
                     healthLabel.getWidth() + 2 * gap, healthLabel.getHeight() + 2 * gap);
@@ -159,9 +159,9 @@ public class CardView extends Group {
             float scale = 1.6f;
             float fontScale = cardSize.getScale() * scale;
             float fontSize = cardSize.getFontSize() * scale;
-            float gap = fontSize / 6f;
+            float gap = fontSize / 10f;
 
-            float heightOffset = health > 0 ? fontSize + gap : 0;
+            float heightOffset = health > 0 ? fontSize + gap * 2 : 0;
 
             costLabel.setFontScale(cost < 10 ? fontScale : fontScale * 0.8f);
             costLabel.setAlignment(Align.center);

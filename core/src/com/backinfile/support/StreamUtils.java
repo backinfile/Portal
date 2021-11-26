@@ -59,4 +59,13 @@ public class StreamUtils {
         }
         return defaultValue;
     }
+
+    public static <T> void removeIf(Collection<T> list, Predicate<T> predicate) {
+        for (Iterator<T> iterator = list.iterator(); iterator.hasNext(); ) {
+            T t = iterator.next();
+            if (predicate.test(t)) {
+                iterator.remove();
+            }
+        }
+    }
 }

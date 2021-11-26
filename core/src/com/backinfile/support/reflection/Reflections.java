@@ -11,6 +11,14 @@ import java.text.MessageFormat;
 
 public class Reflections {
 
+    public static String getAllClassName(String packageName) {
+        StringBuilder sb = new StringBuilder();
+        for (String name : ReflectionUtils.getClassNames(packageName)) {
+            sb.append(name).append('\n');
+        }
+        return sb.toString();
+    }
+
     // 这个函数需要需改class文件，所以执行这个函数前尽量少加载类
     public static void classRewriteInit(String packageName, ClassLoader... classLoaders) {
         ClassPool pool = ClassPool.getDefault();

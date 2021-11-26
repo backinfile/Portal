@@ -1,7 +1,7 @@
 package com.backinfile.portal.view.screens;
 
-import com.backinfile.portal.LocalString;
 import com.backinfile.portal.Log;
+import com.backinfile.portal.manager.CardManager;
 import com.backinfile.portal.model.Card;
 import com.backinfile.portal.view.actor.CardSize;
 import com.backinfile.portal.view.group.CardView;
@@ -19,10 +19,9 @@ public class GameStage extends Stage {
         final float cardHeight = CardSize.Normal.getHeight();
 
         for (int i = 0; i < 6; i++) {
-            Card card = new Card(LocalString.getCardString("Test" + (i + 1)));
+            Card card = CardManager.buildCard("Test" + (i + 1));
             CardView cardView = new CardView();
             cardView.setCard(card);
-
             addActor(cardView);
 
             final int index = i;

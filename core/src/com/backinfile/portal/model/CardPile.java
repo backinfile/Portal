@@ -3,7 +3,6 @@ package com.backinfile.portal.model;
 import com.backinfile.support.Random;
 import com.backinfile.support.StreamUtils;
 import com.backinfile.support.Tuple2;
-import com.backinfile.support.Utils;
 import com.backinfile.support.func.Predicate;
 
 import java.util.*;
@@ -141,14 +140,14 @@ public class CardPile implements Iterable<Card> {
         return cardPile;
     }
 
-    public CardPile getRandom(int n) {
+    public CardPile getRandom(Random random, int n) {
         CardPile copy = new CardPile(this);
         CardPile polls = new CardPile();
         for (int i = 0; i < n; i++) {
             if (copy.isEmpty()) {
                 break;
             }
-            Card card = copy.get(Utils.nextInt(copy.size()));
+            Card card = copy.get(random.next(copy.size()));
             copy.remove(card);
             polls.add(card);
         }

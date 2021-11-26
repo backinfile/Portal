@@ -191,4 +191,13 @@ public class Utils {
         System.out.println(Utils.format("{} say {}, {0}", "ww", "hi"));
     }
 
+    private static long idMax = 1;
+
+    public static long applyId() {
+        return idMax++;
+    }
+
+    public static void resetId() {
+        idMax = 1;
+    }
 }

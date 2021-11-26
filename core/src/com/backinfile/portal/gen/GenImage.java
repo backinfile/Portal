@@ -20,7 +20,8 @@ public class GenImage {
         genCardBoarder(Color.ROYAL, "cardBorderPlugin");
         genCardBoarder(Color.SCARLET, "cardBorderError");
         genVirus();
-        genCardDecorate();
+        genCardDecorateCost();
+        genCardDecorateHealth();
     }
 
     private static void genCardBoarder(Color color, String name) {
@@ -33,6 +34,7 @@ public class GenImage {
         pixmap.setBlending(Pixmap.Blending.None);
 
         drawRoundCornerBorder(pixmap, color, width, height, borderWidth);
+
 //        pixmap.setColor(Color.WHITE);
 //        drawBorder(pixmap, width - borderWidth2, height - borderWidth2, borderWidth, borderWidth, borderWidth);
 
@@ -60,12 +62,39 @@ public class GenImage {
         int size = ScreenSize.SCREEN_CARD_DECORATE_SIZE;
 
         Pixmap pixmap = new Pixmap(size, size, Pixmap.Format.RGBA8888);
+        pixmap.setBlending(Pixmap.Blending.None);
         pixmap.setColor(new Color(0.5f, 0.5f, 0.5f, 0.5f));
         pixmap.fill();
 
         writeImageFile(pixmap, "cardDecorate");
         pixmap.dispose();
         Log.res.info("gen image: cardDecorate");
+    }
+
+    private static void genCardDecorateHealth() {
+        int size = 200;
+        Pixmap pixmap = new Pixmap(size, size, Pixmap.Format.RGBA8888);
+        pixmap.setBlending(Pixmap.Blending.None);
+        drawRoundCornerBorder(pixmap, new Color(0.9f, 0.9f, 0.9f, 0.7f), size, size, size / 10);
+
+        writeImageFile(pixmap, "cardDecorateHealth");
+        pixmap.dispose();
+        Log.res.info("gen image: cardDecorateHealth");
+    }
+
+    private static void genCardDecorateCost() {
+        int size = 200;
+        int border = size / 10;
+        Pixmap pixmap = new Pixmap(size, size, Pixmap.Format.RGBA8888);
+        pixmap.setBlending(Pixmap.Blending.None);
+        pixmap.setColor(new Color(0.9f, 0.9f, 0.9f, 0.7f));
+        pixmap.fillCircle(size / 2, size / 2, size / 2);
+        pixmap.setColor(Color.CLEAR);
+        pixmap.fillCircle(size / 2, size / 2, size / 2 - border);
+
+        writeImageFile(pixmap, "cardDecorateCost");
+        pixmap.dispose();
+        Log.res.info("gen image: cardDecorateCost");
     }
 
     private static void drawRoundCornerBorder(Pixmap pixmap, Color color, int width, int height, int borderWidth) {
@@ -78,6 +107,9 @@ public class GenImage {
         pixmap.fillCircle(width - borderWidth, borderWidth, borderWidth);
         pixmap.fillCircle(borderWidth, height - borderWidth, borderWidth);
         pixmap.fillCircle(width - borderWidth, height - borderWidth, borderWidth);
+
+        pixmap.setColor(Color.CLEAR);
+        pixmap.fillRectangle(borderWidth, borderWidth, width - borderWidth * 2, height - borderWidth * 2);
     }
 
     private static void drawBorder(Pixmap pixmap, int width, int height, int borderWidth, int offsetX, int offsetY) {

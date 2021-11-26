@@ -4,6 +4,10 @@ public enum SkillTrigger {
     None,
     Play,
     AfterPlay,
-    Damage,
-    AfterDamage,
+    Kill,
+    AfterKill,
+    Buy,
+    AfterBuy,
+    AfterGenHash,
+    AfterGenData,
 }

@@ -1,10 +1,14 @@
 package com.backinfile.portal;
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 
 public class ScreenSize {
-    public static final int SCREEN_WIDTH = 1334;
-    public static final int SCREEN_HEIGHT = 750;
+
+    private static final float SCREEN_SCALE_RATE = 0.7f;
+
+    public static final int SCREEN_WIDTH = (int) (1344 * SCREEN_SCALE_RATE);
+    public static final int SCREEN_HEIGHT = (int) (750 * SCREEN_SCALE_RATE);
 
     public static final int SCREEN_CARD_WIDTH = 630;
     public static final int SCREEN_CARD_HEIGHT = 880;
@@ -29,10 +33,10 @@ public class ScreenSize {
 
     public static final float CARD_SMALL_SCALE = 0.3f;
     public static final float CARD_NORMAL_SCALE = 0.5f;
-    public static final float CARD_LARGE_SCALE = 1f;
+    public static final float CARD_LARGE_SCALE = 0.9f;
     public static final float CARD_LARGE_LARGE_SCALE = 1.2f;
 
-    public static final float FONT_DEFAULT_SIZE = 36 * 2f;
+    public static float FONT_DEFAULT_SIZE = 36 * 2f * SCREEN_HEIGHT / 750f;
 
 
     public static void init() {
@@ -50,6 +54,10 @@ public class ScreenSize {
         CARD_WIDTH_L = width * CARD_LARGE_SCALE;
         CARD_HEIGHT_LL = height * CARD_LARGE_LARGE_SCALE;
         CARD_WIDTH_LL = width * CARD_LARGE_LARGE_SCALE;
+
+        if (Gdx.app.getType() == Application.ApplicationType.Android) {
+            FONT_DEFAULT_SIZE *= 1.2f;
+        }
     }
 
 }

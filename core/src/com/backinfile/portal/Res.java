@@ -3,6 +3,7 @@ package com.backinfile.portal;
 import com.alibaba.fastjson.JSONObject;
 import com.backinfile.portal.view.actor.CardSize;
 import com.backinfile.support.FontCharacterCollection;
+import com.backinfile.support.reflection.Reflections;
 import com.backinfile.support.reflection.Timing;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -33,6 +34,9 @@ public class Res {
     public static BitmapFont DefaultFontLarge;
     public static BitmapFont DefaultFont;
     public static BitmapFont DefaultFontLargeLarge;
+
+    public static final String CLASSES_FILE_PATH = "data/classes.txt";
+
     private static final FontCharacterCollection fontCharacterCollection = new FontCharacterCollection();
     private static final Map<String, Texture> textureMap = new HashMap<>(); // path->image
     private static final Map<LocalString.LocalImagePathString, TextureRegionDrawable> cardImageMap = new HashMap<>();
@@ -47,7 +51,19 @@ public class Res {
 
         initImage();
         initFont(); // 一定要在所有string加载后执行
+
+        initReflectionFile();
     }
+
+    private static void initReflectionFile() {
+        if (!Settings.inDev()) {
+            return;
+        }
+
+        String path = "android/assets/" + CLASSES_FILE_PATH;
+        Gdx.files.local(path).writeString(Reflections.getAllClassName(Settings.PACKAGE_NAME), false);
+    }
+
 
     public static TextureRegionDrawable getTexture(LocalString.LocalImagePathString imagePathString) {
         if (cardImageMap.containsKey(imagePathString)) {
