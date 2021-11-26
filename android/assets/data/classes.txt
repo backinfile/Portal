@@ -45,6 +45,7 @@ com.backinfile.portal.model.skills.GenHashSkill
 com.backinfile.portal.model.skills.Skill
 com.backinfile.portal.model.skills.SkillContainer
 com.backinfile.portal.model.skills.SkillDuration
+com.backinfile.portal.model.skills.SkillGroup
 com.backinfile.portal.model.skills.SkillTargetType
 com.backinfile.portal.model.skills.SkillTrigger
 com.backinfile.portal.model.Source$ServerSource

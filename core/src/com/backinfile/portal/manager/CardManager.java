@@ -4,6 +4,7 @@ import com.backinfile.portal.LocalString;
 import com.backinfile.portal.Log;
 import com.backinfile.portal.model.Card;
 import com.backinfile.portal.model.CardType;
+import com.backinfile.portal.model.skills.Skill;
 import com.backinfile.support.Random;
 import com.backinfile.support.StreamUtils;
 import com.backinfile.support.Utils;
@@ -50,6 +51,14 @@ public class CardManager {
         Card card = new Card();
         card.id = Utils.applyId();
         card.localCardString = localCardString;
+
+        if (localCardString.skills != null) {
+            for (String skillName : localCardString.skills) {
+                Skill skill = SkillManager.build(skillName);
+                card.skillGroup.addSkill(skill);
+            }
+        }
+
         card.calcState();
         return card;
     }

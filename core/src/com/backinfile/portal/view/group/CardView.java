@@ -120,9 +120,8 @@ public class CardView extends Group {
         }
     }
 
-
     public void updateHealth() {
-        int health = card.finalHealth;
+        int health = card.hash;
         if (health <= 0) {
             healthLabel.setVisible(false);
             healthIcon.setVisible(false);
@@ -148,8 +147,8 @@ public class CardView extends Group {
     }
 
     public void updateCost() {
-        int cost = card.finalCost;
-        int health = card.finalHealth;
+        int cost = card.data;
+        int health = card.hash;
 
         if (cost <= 0) {
             costLabel.setVisible(false);

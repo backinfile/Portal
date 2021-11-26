@@ -4,8 +4,9 @@
       "sn": "Test1",
       "name": "病毒",
       "cardType": "Virus",
-      "cost": 0,
-      "health": 2,
+      "skills": [
+        "Gen2HashSkill"
+      ],
       "image": {
         "path": "image/gen/virus.png"
       }
@@ -14,8 +15,9 @@
       "sn": "Test2",
       "name": "指令",
       "cardType": "Command",
-      "cost": 1,
-      "health": 2,
+      "skills": [
+        "Gen3DataSkill"
+      ],
       "image": {
         "path": "image/gen/virus.png"
       }
