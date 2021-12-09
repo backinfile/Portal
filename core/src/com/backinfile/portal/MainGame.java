@@ -30,7 +30,6 @@ public class MainGame extends DefaultGame {
         SkillManager.init();
         CardManager.init();
         
-
         setScreen(GameScreen.class);
     }
 

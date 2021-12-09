@@ -29,8 +29,8 @@ public class CardManager {
         card.localCardString = localCardString;
 
         if (localCardString.skills != null) {
-            for (String skillName : localCardString.skills) {
-                Skill skill = SkillManager.build(skillName);
+            for (LocalString.DSkill dSkill : localCardString.skills) {
+                Skill skill = SkillManager.build(dSkill.sn, dSkill.args);
                 card.skillGroup.addSkill(skill);
             }
         }

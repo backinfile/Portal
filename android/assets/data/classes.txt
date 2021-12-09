@@ -8,6 +8,7 @@ com.backinfile.portal.FontManager
 com.backinfile.portal.gen.GenImage
 com.backinfile.portal.LocalString$DCost
 com.backinfile.portal.LocalString$DCostUnit
+com.backinfile.portal.LocalString$DSkill
 com.backinfile.portal.LocalString$LocalCardString
 com.backinfile.portal.LocalString$LocalImagePathString
 com.backinfile.portal.LocalString$LocalSkillString
@@ -35,12 +36,12 @@ com.backinfile.portal.model.GameAction
 com.backinfile.portal.model.Human
 com.backinfile.portal.model.HumanOper
 com.backinfile.portal.model.IEffectContainer
+com.backinfile.portal.model.skills.ProvideNumberCardSkill
 com.backinfile.portal.model.skills.Skill
 com.backinfile.portal.model.skills.SkillContainer
 com.backinfile.portal.model.skills.SkillDuration
 com.backinfile.portal.model.skills.SkillGroup
 com.backinfile.portal.model.skills.SkillTriggerType
-com.backinfile.portal.model.skills.TestSkill
 com.backinfile.portal.Res$1
 com.backinfile.portal.Res
 com.backinfile.portal.ScreenSize

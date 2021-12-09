@@ -6,7 +6,6 @@ import com.backinfile.portal.model.Human;
 import com.backinfile.support.AutoSet;
 
 public abstract class Skill {
-    public long id;
     @AutoSet
     public Board board;
     @AutoSet

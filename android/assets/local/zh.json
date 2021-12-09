@@ -5,9 +5,9 @@
       "name": "病毒",
       "skills": [
         {
-          "sn": "TestSkill",
+          "sn": "ProvideNumberCardSkill",
           "args": [
-            "123"
+            "3"
           ]
         }
       ],

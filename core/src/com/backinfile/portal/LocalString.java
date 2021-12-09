@@ -93,13 +93,18 @@ public class LocalString {
         public String extraDescription = "[EXTRA_DESCRIPTION]";
 
         public DCost cost = null;
-        public String[] skills = null;
+        public DSkill[] skills = null;
         public int vectorPoint = 0;
         public int copy = 1; // 卡池中有几张复制
 
         public LocalImagePathString image = null;
 
         public boolean test = false; // 非正式卡牌
+    }
+
+    public static class DSkill {
+        public String sn;
+        public String[] args;
     }
 
     /**
