@@ -13,12 +13,12 @@ public class Board implements IAlive {
     public final CardPile numberPile = new CardPile();
     public final CardPile numberShop = new CardPile();
 
-    public int monsterSlotNumber = 4;
-    public int numberSlotNumber = 5;
+    public int monsterCardSlotNumber = 2;
+    public int numberCardSlotNumber = 5;
 
 
     public final List<Human> humanList = new ArrayList<>();
-    
+
     private ActionQueue<GameAction> actionQueue;
     private IEffectContainer effectContainer;
 
