@@ -1,4 +1,4 @@
-package com.backinfile.portal.model.skills;
+package com.backinfile.portal.model;
 
 public enum SkillTriggerType {
     None,

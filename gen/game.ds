@@ -1,35 +1,44 @@
-// start comment
 
-// near comment
-struct DBoard {
-	DHuman[] humans;
-	EBoardState state;
+
+message SCBoardInit {
+    SCHumanUpdate humans;
+    SCCardsMove cards;
 }
 
-// comment test
-struct DHuman {
-	long[] id;
-	float percent;
-	float[] percents; // field comment
-	string name;
-	DCardPile handPile;
-	String[] cards;
+message SCHumanUpdate {
+    DHuman[] humans;
 }
 
-struct DCardPile {
-	DCard[] cards;
+message SCCardsMove {
+    DCard[] cards;
 }
 
 struct DCard {
-	long id;
-	String sn;
+    long id;
+    ECardType cardType;
+    String sn;
+    String name;
+    int number;
+
+    DCardPosition position;
 }
 
-message SCGameStart {
+enum ECardType {
+    Number,
+    Monster,
 }
 
-enum EBoardState {
-	Normal, // normal
-	Run, // run
-	Close, // close
+struct DCardPosition {
+    String ownerToken;
+    String pileIndex;
+    String pileSize;
+}
+
+struct DHuman {
+    String token;
+    int actionPoint;
+    int winPoint;
+    int diamond;
+    int handPileSize;
+    int monsterPileSize;
 }

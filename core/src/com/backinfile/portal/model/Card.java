@@ -1,7 +1,6 @@
 package com.backinfile.portal.model;
 
 import com.backinfile.portal.LocalString;
-import com.backinfile.portal.model.skills.SkillGroup;
 
 public class Card {
     public long id;

@@ -1,8 +1,5 @@
-package com.backinfile.portal.model.skills;
+package com.backinfile.portal.model;
 
-import com.backinfile.portal.model.Board;
-import com.backinfile.portal.model.Card;
-import com.backinfile.portal.model.Human;
 import com.backinfile.support.AutoSet;
 
 public abstract class Skill {

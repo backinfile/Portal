@@ -2,7 +2,7 @@ package com.backinfile.portal.manager;
 
 import com.backinfile.portal.LocalString;
 import com.backinfile.portal.model.Card;
-import com.backinfile.portal.model.skills.Skill;
+import com.backinfile.portal.model.Skill;
 import com.backinfile.support.Utils;
 
 import java.util.HashMap;

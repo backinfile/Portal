@@ -16,18 +16,22 @@ public class Board implements IAlive {
     public int monsterCardSlotNumber = 2;
     public int numberCardSlotNumber = 5;
 
-
     public final List<Human> humanList = new ArrayList<>();
 
     private ActionQueue<GameAction> actionQueue;
-    private IEffectContainer effectContainer;
 
-    public void init(IEffectContainer effectContainer) {
+    public static enum BoardState {
+        None, // 未开始
+        GamePrepare, // 进入准备阶段
+        TurnStart, // 进入回合开始阶段
+        InTurn, // 回合进行中
+        TurnEnd, // 回合结束阶段
+    }
+
+    public void init() {
         actionQueue = new ActionQueue<>(action -> {
             action.board = this;
         });
-
-        this.effectContainer = effectContainer;
     }
 
     @Override
@@ -37,14 +41,11 @@ public class Board implements IAlive {
     @Override
     public void update(long timeDelta) {
         actionQueue.update(timeDelta);
-        effectContainer.flush();
-        effectContainer.update(timeDelta);
     }
 
     @Override
     public void dispose() {
         actionQueue.clear();
-        effectContainer.clear();
 
     }
 
@@ -52,7 +53,4 @@ public class Board implements IAlive {
         return actionQueue;
     }
 
-    public IEffectContainer getEffectContainer() {
-        return effectContainer;
-    }
 }

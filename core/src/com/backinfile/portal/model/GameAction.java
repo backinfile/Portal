@@ -1,6 +1,5 @@
 package com.backinfile.portal.model;
 
-import com.backinfile.portal.view.effects.Effect;
 import com.backinfile.support.AutoSet;
 import com.backinfile.support.IAction;
 
@@ -47,15 +46,4 @@ public abstract class GameAction implements IAction {
         board.getActionQueue().addFirst(action);
     }
 
-    public final void addEffect(Effect effect) {
-        board.getEffectContainer().add(effect);
-    }
-
-    public final void flushEffect() {
-        board.getEffectContainer().flush();
-    }
-
-    public final void addAndFlush(Effect effect) {
-        board.getEffectContainer().addAndFlush(effect);
-    }
 }

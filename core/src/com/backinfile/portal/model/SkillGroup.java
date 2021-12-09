@@ -1,4 +1,4 @@
-package com.backinfile.portal.model.skills;
+package com.backinfile.portal.model;
 
 import com.backinfile.support.StreamUtils;
 import com.backinfile.support.func.Predicate;

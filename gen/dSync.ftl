@@ -18,13 +18,17 @@ public class ${handlerClassName} {
 	public void removeListener(DSyncListener listener) {
 		listeners.remove(listener);
 	}
+
+	public void clearListener(DSyncListener listener) {
+	    listeners.clear();
+	}
 	
 	// 消息监听接口
-	public static abstract class DSyncListener {
+	public static interface DSyncListener {
 <#list structs as struct>
 <#if struct.isMsg>
 
-		public boolean onMessage(${handlerClassName} handler, ${struct.className} msg) {
+		default boolean onMessage(${handlerClassName} handler, ${struct.className} msg) {
 			return false;
 		}
 </#if>
@@ -42,7 +46,7 @@ public class ${handlerClassName} {
 <#if struct.isMsg>
 		case ${struct.className}.TypeName:
 			for (DSyncListener listener : listeners) {
-				handle ||= listener.onMessage(this, ${struct.className}.parseJSONObject(jsonObject));
+				handle |= listener.onMessage(this, ${struct.className}.parseJSONObject(jsonObject));
 				if (once && handle) {
 					return true;
 				}

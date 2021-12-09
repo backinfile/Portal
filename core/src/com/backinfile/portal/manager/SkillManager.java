@@ -3,7 +3,7 @@ package com.backinfile.portal.manager;
 import com.backinfile.portal.Log;
 import com.backinfile.portal.Res;
 import com.backinfile.portal.Settings;
-import com.backinfile.portal.model.skills.Skill;
+import com.backinfile.portal.model.Skill;
 import com.backinfile.support.Utils;
 import com.backinfile.support.reflection.ReflectionUtils;
 import com.badlogic.gdx.Gdx;
