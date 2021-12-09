@@ -12,6 +12,7 @@ import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.regex.Pattern;
 
 public class SkillManager {
 
@@ -48,10 +49,29 @@ public class SkillManager {
         }
     }
 
-    public static Skill build(String sn) {
+    private static final Pattern intPattern = Pattern.compile("\\d+");
+    private static final Pattern floatPattern = Pattern.compile("\\d+\\.\\d+");
+
+    public static Skill build(String sn, String... args) {
         if (skillClassMap.containsKey(sn)) {
             try {
-                Skill skill = (Skill) skillClassMap.get(sn).getConstructor().newInstance();
+                Class<?> skillClass = skillClassMap.get(sn);
+                Class<?>[] argsClass = new Class[args.length];
+                Object[] argsValue = new Object[args.length];
+                for (int i = 0; i < args.length; i++) {
+                    String arg = args[i];
+                    if (intPattern.matcher(arg).matches()) {
+                        argsClass[i] = int.class;
+                        argsValue[i] = Integer.valueOf(arg);
+                    } else if (floatPattern.matcher(arg).matches()) {
+                        argsClass[i] = float.class;
+                        argsValue[i] = Float.valueOf(arg);
+                    } else {
+                        argsClass[i] = String.class;
+                        argsValue[i] = arg;
+                    }
+                }
+                Skill skill = (Skill) skillClass.getConstructor(argsClass).newInstance(argsValue);
                 return skill;
             } catch (Exception e) {
                 Log.res.error(e);

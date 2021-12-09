@@ -3,51 +3,14 @@
     {
       "sn": "Test1",
       "name": "病毒",
-      "cardType": "Virus",
       "skills": [
-        "Gen2HashSkill"
+        {
+          "sn": "TestSkill",
+          "args": [
+            "123"
+          ]
+        }
       ],
-      "image": {
-        "path": "image/gen/virus.png"
-      }
-    },
-    {
-      "sn": "Test2",
-      "name": "指令",
-      "cardType": "Command",
-      "skills": [
-        "Gen3DataSkill"
-      ],
-      "image": {
-        "path": "image/gen/virus.png"
-      }
-    },
-    {
-      "sn": "Test3",
-      "name": "数据",
-      "cardType": "Data",
-      "cost": 2,
-      "health": 2,
-      "image": {
-        "path": "image/gen/virus.png"
-      }
-    },
-    {
-      "sn": "Test4",
-      "name": "插件",
-      "cardType": "Plugin",
-      "cost": 3,
-      "health": 2,
-      "image": {
-        "path": "image/gen/virus.png"
-      }
-    },
-    {
-      "sn": "Test5",
-      "name": "错误",
-      "cardType": "Error",
-      "cost": 10,
-      "health": 0,
       "image": {
         "path": "image/gen/virus.png"
       }

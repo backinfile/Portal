@@ -3,11 +3,8 @@ package com.backinfile.portal.model;
 import com.badlogic.gdx.graphics.Color;
 
 public enum CardType {
-    Virus(Color.FIREBRICK),
-    Command(Color.BLUE),
-    Data(Color.LIGHT_GRAY),
-    Plugin(Color.ROYAL),
-    Error(Color.SCARLET),
+    Number(Color.ROYAL),
+    Monster(Color.FIREBRICK),
     ;
 
     private final Color color;
@@ -20,7 +17,4 @@ public enum CardType {
         return color;
     }
 
-    public boolean isMainType() {
-        return this == Command || this == Data || this == Plugin;
-    }
 }

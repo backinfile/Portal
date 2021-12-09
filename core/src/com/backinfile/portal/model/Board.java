@@ -3,21 +3,28 @@ package com.backinfile.portal.model;
 import com.backinfile.support.ActionQueue;
 import com.backinfile.support.IAlive;
 
-public class Board implements IAlive {
-    public Human human;
-    public Source.ServerSource serverSource = new Source.ServerSource();
-    public Source.VirusSource virusSource = new Source.VirusSource();
-    public CardPile trashPile = new CardPile();
+import java.util.ArrayList;
+import java.util.List;
 
+public class Board implements IAlive {
+
+    public final CardPile monsterPile = new CardPile();
+    public final CardPile monsterShop = new CardPile();
+    public final CardPile numberPile = new CardPile();
+    public final CardPile numberShop = new CardPile();
+
+    public int monsterSlotNumber = 4;
+    public int numberSlotNumber = 5;
+
+
+    public final List<Human> humanList = new ArrayList<>();
+    
     private ActionQueue<GameAction> actionQueue;
     private IEffectContainer effectContainer;
 
-    public void init(Human human, IEffectContainer effectContainer) {
-        this.human = human;
-
+    public void init(IEffectContainer effectContainer) {
         actionQueue = new ActionQueue<>(action -> {
             action.board = this;
-            action.human = this.human;
         });
 
         this.effectContainer = effectContainer;
@@ -25,7 +32,6 @@ public class Board implements IAlive {
 
     @Override
     public void start() {
-
     }
 
     @Override

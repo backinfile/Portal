@@ -43,6 +43,15 @@ public class CardPile implements Iterable<Card> {
         }
     }
 
+    public void replace(Card oldCard, Card newCard) {
+        int index = cards.indexOf(oldCard);
+        if (index >= 0) {
+            cards.set(index, newCard);
+        } else {
+            add(newCard);
+        }
+    }
+
     public void addAll(Iterable<Card> cards) {
         for (Card card : cards) {
             add(card);

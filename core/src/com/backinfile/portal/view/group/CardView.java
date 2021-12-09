@@ -76,14 +76,11 @@ public class CardView extends Group {
 
     public void setCard(Card card) {
         this.card = card;
-        borderImage.setDrawable(Res.getTexture(cardTypeString.images[card.localCardString.cardType.ordinal()]));
+        borderImage.setDrawable(Res.getTexture(cardTypeString.images[card.cardType.ordinal()]));
         mainImage.setDrawable(Res.getTexture(card.localCardString.image));
 
         setCardViewState(CardViewState.Normal);
         setTitle(card.localCardString.name);
-
-        updateHealth();
-        updateCost();
     }
 
     public void setCardViewState(CardViewState cardViewState) {
@@ -119,63 +116,37 @@ public class CardView extends Group {
             titleLabel.setVisible(true);
         }
     }
-
-    public void updateHealth() {
-        int health = card.hash;
-        if (health <= 0) {
-            healthLabel.setVisible(false);
-            healthIcon.setVisible(false);
-        } else {
-            CardSize cardSize = CardSize.Large;
-            float scale = 1.6f;
-            float fontScale = cardSize.getScale() * scale;
-            float fontSize = cardSize.getFontSize() * scale;
-            healthLabel.setFontScale(health < 10 ? fontScale : fontScale * 0.8f);
-            healthLabel.setAlignment(Align.center);
-            healthLabel.setWrap(false);
-            healthLabel.setBounds(getWidth() * 0.95f - fontSize, getHeight() * 0.95f - fontSize, fontSize, fontSize);
-            healthLabel.setText(health);
-            healthLabel.setVisible(true);
-
-            float gap = fontSize / 10f;
-
-            healthIcon.setBounds(healthLabel.getX() - gap, healthLabel.getY() - gap,
-                    healthLabel.getWidth() + 2 * gap, healthLabel.getHeight() + 2 * gap);
-            healthIcon.setColor(new Color(1, 1, 1, 0.6f));
-            healthIcon.setVisible(true);
-        }
-    }
-
-    public void updateCost() {
-        int cost = card.data;
-        int health = card.hash;
-
-        if (cost <= 0) {
-            costLabel.setVisible(false);
-            costIcon.setVisible(false);
-        } else {
-            CardSize cardSize = CardSize.Large;
-            float scale = 1.6f;
-            float fontScale = cardSize.getScale() * scale;
-            float fontSize = cardSize.getFontSize() * scale;
-            float gap = fontSize / 10f;
-
-            float heightOffset = health > 0 ? fontSize + gap * 2 : 0;
-
-            costLabel.setFontScale(cost < 10 ? fontScale : fontScale * 0.8f);
-            costLabel.setAlignment(Align.center);
-            costLabel.setWrap(false);
-            costLabel.setBounds(getWidth() * 0.95f - fontSize, getHeight() * 0.95f - fontSize - heightOffset, fontSize, fontSize);
-            costLabel.setText(cost);
-            costLabel.setVisible(true);
-
-
-            costIcon.setBounds(costLabel.getX() - gap, costLabel.getY() - gap,
-                    costLabel.getWidth() + 2 * gap, costLabel.getHeight() + 2 * gap);
-            costIcon.setColor(new Color(1, 1, 1, 0.6f));
-            costIcon.setVisible(true);
-        }
-    }
+//
+//    public void updateCost() {
+//        int cost = card.data;
+//        int health = card.hash;
+//
+//        if (cost <= 0) {
+//            costLabel.setVisible(false);
+//            costIcon.setVisible(false);
+//        } else {
+//            CardSize cardSize = CardSize.Large;
+//            float scale = 1.6f;
+//            float fontScale = cardSize.getScale() * scale;
+//            float fontSize = cardSize.getFontSize() * scale;
+//            float gap = fontSize / 10f;
+//
+//            float heightOffset = health > 0 ? fontSize + gap * 2 : 0;
+//
+//            costLabel.setFontScale(cost < 10 ? fontScale : fontScale * 0.8f);
+//            costLabel.setAlignment(Align.center);
+//            costLabel.setWrap(false);
+//            costLabel.setBounds(getWidth() * 0.95f - fontSize, getHeight() * 0.95f - fontSize - heightOffset, fontSize, fontSize);
+//            costLabel.setText(cost);
+//            costLabel.setVisible(true);
+//
+//
+//            costIcon.setBounds(costLabel.getX() - gap, costLabel.getY() - gap,
+//                    costLabel.getWidth() + 2 * gap, costLabel.getHeight() + 2 * gap);
+//            costIcon.setColor(new Color(1, 1, 1, 0.6f));
+//            costIcon.setVisible(true);
+//        }
+//    }
 
     private float getHealthDecorateOffsetX() {
         return CardSize.Large.getDecorateSize() * 0.2f;

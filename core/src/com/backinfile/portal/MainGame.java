@@ -29,6 +29,7 @@ public class MainGame extends DefaultGame {
         Res.init();
         SkillManager.init();
         CardManager.init();
+        
 
         setScreen(GameScreen.class);
     }

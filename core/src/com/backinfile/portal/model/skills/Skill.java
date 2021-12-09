@@ -15,33 +15,25 @@ public abstract class Skill {
     public Card targetCard = null;
 
     // 生效时间
-    public SkillDuration skillDuration = SkillDuration.AuraCheck;
+    public SkillDuration skillDuration = SkillDuration.Fixed;
 
     // 触发时机
-    public SkillTrigger skillTrigger = SkillTrigger.None;
+    public SkillTriggerType skillTrigger = SkillTriggerType.None;
     public int triggerLimit = -1;
     public int triggerLimitMax = -1;
-
-    // 是否需要目标
-    public SkillTargetType skillTargetType;
 
     public Skill() {
     }
 
-    public void setTrigger(SkillDuration skillDuration, SkillTrigger skillTrigger) {
+    public void setTrigger(SkillDuration skillDuration, SkillTriggerType skillTrigger) {
         setTrigger(skillDuration, skillTrigger, -1);
     }
 
-    public void setTrigger(SkillDuration skillDuration, SkillTrigger skillTrigger, int limit) {
+    public void setTrigger(SkillDuration skillDuration, SkillTriggerType skillTrigger, int limit) {
         this.skillDuration = skillDuration;
         this.skillTrigger = skillTrigger;
         this.triggerLimitMax = this.triggerLimit = limit;
     }
-
-    public void setSkillTargetType(SkillTargetType skillTargetType) {
-        this.skillTargetType = skillTargetType;
-    }
-
 
     public boolean triggerable() {
         return true;

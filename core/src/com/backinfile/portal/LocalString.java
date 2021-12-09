@@ -1,7 +1,6 @@
 package com.backinfile.portal;
 
 import com.alibaba.fastjson.JSONObject;
-import com.backinfile.portal.model.CardType;
 import com.backinfile.support.Utils;
 import com.backinfile.support.reflection.Timing;
 
@@ -90,13 +89,39 @@ public class LocalString {
 
         public String sn = "[SN]";
         public String name = "[NAME]";
-        public CardType cardType = CardType.Data;
-        public int copy = 1; // 卡池中有几张复制
-        public int star = 1; // 星级
         public String description = "[DESCRIPTION]";
+        public String extraDescription = "[EXTRA_DESCRIPTION]";
+
+        public DCost cost = null;
         public String[] skills = null;
+        public int vectorPoint = 0;
+        public int copy = 1; // 卡池中有几张复制
+
         public LocalImagePathString image = null;
+
         public boolean test = false; // 非正式卡牌
+    }
+
+    /**
+     * 34567: {{directCost:3,4,5,6,7}}
+     * 一对+66: {{directCost:6,6, multiCost:2}}
+     * 两对: {{multiCost:2,2}}
+     * 四张相同的: {{multiCost:4}}
+     * 3张顺子: {{chain:3}}
+     * 3张奇数: {{odd:3}}
+     * 333或666: {{directCost:3,3,3},{directCost:6,6,6}}
+     */
+    public static class DCost {
+        public DCostUnit[] costs; // or关系
+    }
+
+    public static class DCostUnit {
+        public int[] directCost;
+        public int diamond;
+        public int[] multiCost;
+        public int odd; // 奇数
+        public int even; // 偶数
+        public int chain;
     }
 
     public static class LocalSkillString {
