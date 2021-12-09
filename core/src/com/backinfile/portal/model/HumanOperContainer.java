@@ -9,6 +9,9 @@ public class HumanOperContainer {
     private final GameMsgHandler gameMsgHandler = new GameMsgHandler();
     private final List<HumanOper> humanOperList = new ArrayList<>();
 
+    public boolean hasHumanOper() {
+        return !humanOperList.isEmpty();
+    }
 
     public void addHumanOper(HumanOper humanOper) {
         gameMsgHandler.addListener(humanOper);

@@ -27,8 +27,13 @@ public class Human extends HumanOperContainer {
 
     }
 
+    public void onGamePrepare() {
+    }
 
     public void onTurnStart() {
+    }
+
+    public void onEnterTurn() {
     }
 
     public void onTurnEnd() {
@@ -55,4 +60,5 @@ public class Human extends HumanOperContainer {
         super.removeHumanOper(humanOper);
 
     }
+
 }
