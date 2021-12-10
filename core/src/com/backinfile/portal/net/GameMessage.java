@@ -3,7 +3,7 @@ package com.backinfile.portal.net;
 import com.backinfile.support.Utils;
 
 public class GameMessage {
-    private String message;
+    private final String message;
 
     public GameMessage(String message) {
         this.message = message;
@@ -27,4 +27,7 @@ public class GameMessage {
         return contentBytes;
     }
 
+    public String getMessage() {
+        return message;
+    }
 }

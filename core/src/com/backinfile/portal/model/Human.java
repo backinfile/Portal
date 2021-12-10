@@ -1,8 +1,8 @@
 package com.backinfile.portal.model;
 
 import com.backinfile.portal.Log;
+import com.backinfile.portal.manager.GameUtils;
 import com.backinfile.support.AutoSet;
-import com.backinfile.support.Utils;
 
 public class Human extends HumanOperContainer {
     @AutoSet
@@ -19,8 +19,8 @@ public class Human extends HumanOperContainer {
     public CardPile slotPile = new CardPile();
     public CardPile monsterPile = new CardPile();
 
-    public Human() {
-        token = Utils.getRandomToken();
+    public Human(String token) {
+        this.token = token;
     }
 
     public void init() {
@@ -40,7 +40,7 @@ public class Human extends HumanOperContainer {
     }
 
     public boolean isAI() {
-        return false;
+        return token.equals(GameUtils.AI_TOKEN);
     }
 
     public String getToken() {

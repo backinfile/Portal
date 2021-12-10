@@ -61,7 +61,8 @@
       ],
       "image": {
         "path": "image/gen/virus.png"
-      }
+      },
+      "copy": 5
     }
   ],
   "skills": [],

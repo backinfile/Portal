@@ -1,9 +1,13 @@
 package com.backinfile.portal.model;
 
+import com.backinfile.portal.msg.GameMsgHandler;
 import com.backinfile.support.ActionQueue;
 import com.backinfile.support.IAlive;
+import com.backinfile.support.Random;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 
 public class Board implements IAlive {
@@ -18,11 +22,13 @@ public class Board implements IAlive {
     public boolean curTurnOver = false;
     public int turnCount = 0;
     public int playerTurnCount = 0;
+    public Human curTurnHuman;
+    public Random random = new Random();
 
     public final List<Human> humanList = new ArrayList<>();
-    public Human curTurnHuman;
     public Human starter;
 
+    public final HashMap<String, LinkedList<String>> outputMsgMap = new HashMap<>();
     private ActionQueue<GameAction> actionQueue;
     private BoardState state = BoardState.None;
 
@@ -30,6 +36,15 @@ public class Board implements IAlive {
         actionQueue = new ActionQueue<>(action -> {
             action.board = this;
         });
+
+        monsterShop.shuffle(random);
+        numberShop.shuffle(random);
+        for (int i = 0; i < monsterCardSlotNumber; i++) {
+            monsterPile.add(monsterShop.pollTop());
+        }
+        for (int i = 0; i < numberCardSlotNumber; i++) {
+            numberPile.add(numberShop.pollTop());
+        }
     }
 
     @Override
@@ -121,6 +136,13 @@ public class Board implements IAlive {
                 break;
             }
         }
+    }
+
+    public void sendMessage(Human human, GameMsgHandler.DSyncBase msg) {
+        if (human.isAI()) {
+            return;
+        }
+        outputMsgMap.computeIfAbsent(human.getToken(), key -> new LinkedList<>()).add(msg.toMessage());
     }
 
 }

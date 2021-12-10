@@ -32,7 +32,7 @@ public class MainGame extends DefaultGame {
         SkillManager.init();
         CardManager.init();
 
-        Human human = new Human();
+        Human human = new Human("");
         human.addHumanOper(new SelectCardsOper());
 
         setScreen(GameScreen.class);

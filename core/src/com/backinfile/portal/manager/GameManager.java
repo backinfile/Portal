@@ -7,4 +7,7 @@ public class GameManager {
         WAN
     }
 
+    public static String getToken() {
+        return "abc";
+    }
 }

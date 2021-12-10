@@ -98,7 +98,7 @@ public class LocalString {
         public DCost cost = null;
         public DSkill[] skills = null;
         public int vectorPoint = 0;
-//        public int copy = 1; // 卡池中有几张复制
+        public int copy = 1; // 卡池中有几张复制
 
         public LocalImagePathString image = null;
 

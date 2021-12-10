@@ -2,6 +2,8 @@ package com.backinfile.portal.manager;
 
 import com.backinfile.portal.LocalString;
 import com.backinfile.portal.model.Card;
+import com.backinfile.portal.model.CardPile;
+import com.backinfile.portal.model.CardType;
 import com.backinfile.portal.model.Skill;
 import com.backinfile.support.Utils;
 
@@ -37,4 +39,29 @@ public class CardManager {
         return card;
     }
 
+    public static CardPile createMonsterShopPile() {
+        CardPile cardPile = new CardPile();
+        for (LocalString.LocalCardString localCardString : cardPool.values()) {
+            if (localCardString.cardType == CardType.Monster) {
+                int copy = localCardString.copy;
+                for (int i = 0; i < copy; i++) {
+                    cardPile.add(buildCard(localCardString));
+                }
+            }
+        }
+        return cardPile;
+    }
+
+    public static CardPile createNumberShopPile() {
+        CardPile cardPile = new CardPile();
+        for (LocalString.LocalCardString localCardString : cardPool.values()) {
+            if (localCardString.cardType == CardType.Number) {
+                int copy = localCardString.copy;
+                for (int i = 0; i < copy; i++) {
+                    cardPile.add(buildCard(localCardString));
+                }
+            }
+        }
+        return cardPile;
+    }
 }
