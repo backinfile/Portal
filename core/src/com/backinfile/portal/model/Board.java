@@ -1,5 +1,6 @@
 package com.backinfile.portal.model;
 
+import com.backinfile.portal.manager.GameUtils;
 import com.backinfile.portal.msg.GameMsgHandler;
 import com.backinfile.support.ActionQueue;
 import com.backinfile.support.IAlive;
@@ -59,7 +60,40 @@ public class Board implements IAlive {
     @Override
     public void start() {
         state = BoardState.GamePrepare;
+
+        for (Human human : humanList) {
+            sendBoardInitMsg(human.getToken());
+        }
     }
+
+    public void sendBoardInitMsg(String toHumanToken) {
+        GameMsgHandler.SCBoardInit boardInit = new GameMsgHandler.SCBoardInit();
+        boardInit.setHumans(getHumanData(toHumanToken));
+        boardInit.setCards(getAllCardInfo(toHumanToken));
+        sendMessage(toHumanToken, boardInit);
+    }
+
+    private GameMsgHandler.SCHumanUpdate getHumanData(String token) {
+        GameMsgHandler.SCHumanUpdate humanUpdate = new GameMsgHandler.SCHumanUpdate();
+        for (Human human : humanList) {
+            GameMsgHandler.DHuman dHuman = new GameMsgHandler.DHuman();
+            dHuman.setToken(human.getToken());
+            dHuman.setActionPoint(human.actionPoint);
+            dHuman.setWinPoint(human.winPoint);
+            dHuman.setDiamond(human.diamond);
+            dHuman.setHandPileSize(human.handPile.size());
+            dHuman.setMonsterPileSize(human.fieldMonsterPile.size());
+            humanUpdate.addHumans(human);
+        }
+        return humanUpdate;
+    }
+
+    private GameMsgHandler.SCCardsMove getAllCardInfo(String token) {
+        GameMsgHandler.SCCardsMove cardsMove = new GameMsgHandler.SCCardsMove();
+        cardsMove.addAllCards(getAllCardInfos());
+        return cardsMove;
+    }
+
 
     public CardPile getAllCards() {
         CardPile cardPile = new CardPile();
@@ -224,11 +258,11 @@ public class Board implements IAlive {
         }
     }
 
-    public void sendMessage(Human human, GameMsgHandler.DSyncBase msg) {
-        if (human.isAI()) {
+    public void sendMessage(String token, GameMsgHandler.DSyncBase msg) {
+        if (GameUtils.AI_TOKEN.equals(token)) {
             return;
         }
-        outputMsgMap.computeIfAbsent(human.getToken(), key -> new LinkedList<>()).add(msg.toMessage());
+        outputMsgMap.computeIfAbsent(token, key -> new LinkedList<>()).add(msg.toMessage());
     }
 
 }

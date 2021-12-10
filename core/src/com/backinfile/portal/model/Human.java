@@ -18,6 +18,7 @@ public class Human extends HumanOperContainer {
     public int actionPoint = 0;
     public int winPoint = 0;
     public int diamond = 0;
+    public int actionPointResetValue = 3;
 
     public CardPile handPile = new CardPile();
     public CardPile gatePile = new CardPile();
@@ -65,6 +66,7 @@ public class Human extends HumanOperContainer {
     }
 
     public void onEnterTurn() {
+        this.actionPoint = actionPointResetValue;
     }
 
     public void onTurnEnd() {

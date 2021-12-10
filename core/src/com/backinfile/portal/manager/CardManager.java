@@ -56,8 +56,7 @@ public class CardManager {
         CardPile cardPile = new CardPile();
         for (LocalString.LocalCardString localCardString : cardPool.values()) {
             if (localCardString.cardType == CardType.Number) {
-                int copy = localCardString.copy;
-                for (int i = 0; i < copy; i++) {
+                for (int i = 0; i < ConstGame.NUMBER_CARD_COPY_NUMBER; i++) {
                     cardPile.add(buildCard(localCardString));
                 }
             }
