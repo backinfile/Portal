@@ -1,6 +1,7 @@
 package com.backinfile.portal;
 
 import com.alibaba.fastjson.JSONObject;
+import com.backinfile.portal.model.CardType;
 import com.backinfile.support.Utils;
 import com.backinfile.support.reflection.Timing;
 
@@ -92,10 +93,12 @@ public class LocalString {
         public String description = "[DESCRIPTION]";
         public String extraDescription = "[EXTRA_DESCRIPTION]";
 
+        public CardType cardType = CardType.Monster;
+        public int number;
         public DCost cost = null;
         public DSkill[] skills = null;
         public int vectorPoint = 0;
-        public int copy = 1; // 卡池中有几张复制
+//        public int copy = 1; // 卡池中有几张复制
 
         public LocalImagePathString image = null;
 

@@ -42,13 +42,6 @@ public class CardView extends Group {
         addActor(costLabel);
         addActor(titleLabel);
 
-        costIcon.setDrawable(Res.getTexture(resourceString.images[1]));
-        costIcon.setVisible(false);
-        costLabel.setVisible(false);
-
-        healthIcon.setDrawable(Res.getTexture(resourceString.images[0]));
-        healthIcon.setVisible(false);
-        healthLabel.setVisible(false);
 
         setSize(CardSize.Large.getWidth(), CardSize.Large.getHeight());
         setOrigin(Align.center);
@@ -76,7 +69,7 @@ public class CardView extends Group {
 
     public void setCard(Card card) {
         this.card = card;
-        borderImage.setDrawable(Res.getTexture(cardTypeString.images[card.cardType.ordinal()]));
+        borderImage.setDrawable(Res.getTexture(cardTypeString.images[card.localCardString.cardType.ordinal()]));
         mainImage.setDrawable(Res.getTexture(card.localCardString.image));
 
         setCardViewState(CardViewState.Normal);

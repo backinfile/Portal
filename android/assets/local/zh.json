@@ -1,6 +1,54 @@
 {
   "cards": [
     {
+      "sn": "1",
+      "name": "1",
+      "cardType": "Number",
+      "number": 1
+    },
+    {
+      "sn": "2",
+      "name": "2",
+      "cardType": "Number",
+      "number": 2
+    },
+    {
+      "sn": "3",
+      "name": "3",
+      "cardType": "Number",
+      "number": 3
+    },
+    {
+      "sn": "4",
+      "name": "4",
+      "cardType": "Number",
+      "number": 4
+    },
+    {
+      "sn": "5",
+      "name": "5",
+      "cardType": "Number",
+      "number": 5
+    },
+    {
+      "sn": "6",
+      "name": "6",
+      "cardType": "Number",
+      "number": 6
+    },
+    {
+      "sn": "7",
+      "name": "7",
+      "cardType": "Number",
+      "number": 7
+    },
+    {
+      "sn": "8",
+      "name": "8",
+      "cardType": "Number",
+      "number": 8
+    },
+    {
       "sn": "Test1",
       "name": "病毒",
       "skills": [
@@ -29,42 +77,15 @@
     {
       "sn": "cardType",
       "strs": [
-        "病毒",
-        "指令",
-        "数据",
-        "插件",
-        "错误"
+        "数字",
+        "英雄"
       ],
       "images": [
         {
-          "path": "image/gen/cardBorderVirus.png"
+          "path": "image/gen/cardBorderNumber.png"
         },
         {
-          "path": "image/gen/cardBorderCommand.png"
-        },
-        {
-          "path": "image/gen/cardBorderData.png"
-        },
-        {
-          "path": "image/gen/cardBorderPlugin.png"
-        },
-        {
-          "path": "image/gen/cardBorderError.png"
-        }
-      ]
-    },
-    {
-      "sn": "resource",
-      "strs": [
-        "哈希",
-        "带宽"
-      ],
-      "images": [
-        {
-          "path": "image/gen/cardDecorateHealth.png"
-        },
-        {
-          "path": "image/gen/cardDecorateCost.png"
+          "path": "image/gen/cardBorderMonster.png"
         }
       ]
     }

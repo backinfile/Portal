@@ -23,7 +23,6 @@ public class Board implements IAlive {
     public Human curTurnHuman;
     public Human starter;
 
-
     private ActionQueue<GameAction> actionQueue;
     private BoardState state = BoardState.None;
 
@@ -113,6 +112,15 @@ public class Board implements IAlive {
 
     public ActionQueue<GameAction> getActionQueue() {
         return actionQueue;
+    }
+
+    public void onMessage(String token, String content) {
+        for (Human human : humanList) {
+            if (human.getToken().equals(token)) {
+                human.onMessage(content);
+                break;
+            }
+        }
     }
 
 }

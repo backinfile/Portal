@@ -5,7 +5,6 @@ import com.backinfile.portal.LocalString;
 public class Card {
     public long id;
     public LocalString.LocalCardString localCardString;
-    public CardType cardType = CardType.Monster;
 
     public final SkillGroup skillGroup = new SkillGroup();
 

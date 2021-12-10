@@ -11,6 +11,7 @@ public class Utils {
     private static final Random RANDOM = new Random();
     public static final String LETTER_AND_NUMBER = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
     public static final String NUMBER = "1234567890";
+    public static final int TOKEN_LENGTH = 16;
 
     public static boolean isNullOrEmpty(String str) {
         return str == null || str.equals("");
@@ -78,7 +79,7 @@ public class Utils {
     public static String getRandomToken() {
         Random rnd = new Random();
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < 16; i++) {
+        for (int i = 0; i < TOKEN_LENGTH; i++) {
             int index = rnd.nextInt(LETTER_AND_NUMBER.length());
             sb.append(LETTER_AND_NUMBER.charAt(index));
         }

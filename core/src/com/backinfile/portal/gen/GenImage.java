@@ -2,6 +2,7 @@ package com.backinfile.portal.gen;
 
 import com.backinfile.portal.Log;
 import com.backinfile.portal.ScreenSize;
+import com.backinfile.portal.model.CardType;
 import com.backinfile.support.reflection.Timing;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -9,19 +10,16 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.PixmapIO;
 
 public class GenImage {
-    private static final String PATH_PREFIX = "android/assets/image/gen/";
+    private static final String PATH_PREFIX = "image/gen/";
 
     @Timing("gen image")
     public static void gen() {
-        genCardBoarder(Color.WHITE, "cardBorder");
-        genCardBoarder(Color.FIREBRICK, "cardBorderVirus");
-        genCardBoarder(Color.BLUE, "cardBorderCommand");
-        genCardBoarder(Color.LIGHT_GRAY, "cardBorderData");
-        genCardBoarder(Color.ROYAL, "cardBorderPlugin");
-        genCardBoarder(Color.SCARLET, "cardBorderError");
+        for (CardType cardType : CardType.values()) {
+            genCardBoarder(cardType.getColor(), "cardBorder" + cardType.name());
+        }
         genVirus();
-        genCardDecorateCost();
-        genCardDecorateHealth();
+//        genCardDecorateCost();
+//        genCardDecorateHealth();
     }
 
     private static void genCardBoarder(Color color, String name) {

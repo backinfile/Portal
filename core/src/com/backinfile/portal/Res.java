@@ -60,7 +60,7 @@ public class Res {
             return;
         }
 
-        String path = "android/assets/" + CLASSES_FILE_PATH;
+        String path = CLASSES_FILE_PATH;
         Gdx.files.local(path).writeString(Reflections.getAllClassName(Settings.PACKAGE_NAME), false);
     }
 

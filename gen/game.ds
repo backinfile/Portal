@@ -15,10 +15,7 @@ message SCCardsMove {
 
 struct DCard {
     long id;
-    ECardType cardType;
     String sn;
-    String name;
-    int number;
 
     DCardPosition position;
 }
