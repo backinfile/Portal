@@ -97,6 +97,10 @@ public class CardPile implements Iterable<Card> {
         return StreamUtils.any(cards, card -> card.id == id);
     }
 
+    public int indexOf(Card card) {
+        return cards.indexOf(card);
+    }
+
     public Card get(int index) {
         return cards.get(index);
     }

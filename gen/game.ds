@@ -27,8 +27,21 @@ enum ECardType {
 
 struct DCardPosition {
     String ownerToken;
-    String pileIndex;
-    String pileSize;
+	EPileType pileType;
+    int pileIndex;
+    int pileSize;
+}
+
+enum EPileType {
+	NumberShop,
+	NumberPile,
+	NumberDiscardPile,
+	MonsterShop,
+	MonsterPile,
+	MonsterDiscardPile,
+	Hand,
+	Gate,
+	FieldMonster,
 }
 
 struct DHuman {

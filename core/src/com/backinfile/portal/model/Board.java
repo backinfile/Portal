@@ -4,11 +4,9 @@ import com.backinfile.portal.msg.GameMsgHandler;
 import com.backinfile.support.ActionQueue;
 import com.backinfile.support.IAlive;
 import com.backinfile.support.Random;
+import com.backinfile.support.StreamUtils;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 public class Board implements IAlive {
 
@@ -16,8 +14,11 @@ public class Board implements IAlive {
     public int numberCardSlotNumber = 5;
     public final CardPile monsterPile = new CardPile();
     public final CardPile monsterShop = new CardPile();
+    public final CardPile monsterDiscardPile = new CardPile();
     public final CardPile numberPile = new CardPile();
     public final CardPile numberShop = new CardPile();
+    public final CardPile numberDiscardPile = new CardPile();
+    private final HashMap<GameMsgHandler.EPileType, CardPile> cardPiles = new HashMap<>();
 
     public boolean curTurnOver = false;
     public int turnCount = 0;
@@ -37,6 +38,13 @@ public class Board implements IAlive {
             action.board = this;
         });
 
+        cardPiles.put(GameMsgHandler.EPileType.NumberPile, numberPile);
+        cardPiles.put(GameMsgHandler.EPileType.NumberShop, numberShop);
+        cardPiles.put(GameMsgHandler.EPileType.NumberDiscardPile, numberDiscardPile);
+        cardPiles.put(GameMsgHandler.EPileType.MonsterShop, monsterShop);
+        cardPiles.put(GameMsgHandler.EPileType.MonsterPile, monsterPile);
+        cardPiles.put(GameMsgHandler.EPileType.MonsterDiscardPile, monsterDiscardPile);
+
         monsterShop.shuffle(random);
         numberShop.shuffle(random);
         for (int i = 0; i < monsterCardSlotNumber; i++) {
@@ -45,11 +53,89 @@ public class Board implements IAlive {
         for (int i = 0; i < numberCardSlotNumber; i++) {
             numberPile.add(numberShop.pollTop());
         }
+
     }
 
     @Override
     public void start() {
         state = BoardState.GamePrepare;
+    }
+
+    public CardPile getAllCards() {
+        CardPile cardPile = new CardPile();
+        StreamUtils.map(cardPiles.values(), cardPile::addAll);
+        for (Human human : humanList) {
+            cardPile.addAll(human.getAllCards());
+        }
+        return cardPile;
+    }
+
+    public boolean contains(Card card) {
+        for (CardPile cardPile : cardPiles.values()) {
+            if (cardPile.contains(card)) {
+                return true;
+            }
+        }
+        for (Human human : humanList) {
+            if (human.contains(card)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean removeCard(Card card) {
+        for (CardPile cardPile : cardPiles.values()) {
+            if (cardPile.remove(card)) {
+                return true;
+            }
+        }
+        for (Human human : humanList) {
+            if (human.removeCard(card)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public GameMsgHandler.DCard getCardInfo(Card card) {
+        GameMsgHandler.DCard dCard = new GameMsgHandler.DCard();
+        dCard.setId(card.id);
+        dCard.setSn(card.localCardString.sn);
+        GameMsgHandler.DCardPosition dCardPosition = new GameMsgHandler.DCardPosition();
+        dCard.setPosition(dCardPosition);
+
+        for (Human human : humanList) {
+            for (Map.Entry<GameMsgHandler.EPileType, CardPile> entry : human.cardPiles.entrySet()) {
+                CardPile cardPile = entry.getValue();
+                if (cardPile.contains(card)) {
+                    dCardPosition.setOwnerToken(human.getToken());
+                    dCardPosition.setPileType(entry.getKey());
+                    dCardPosition.setPileIndex(cardPile.indexOf(card));
+                    dCardPosition.setPileSize(cardPile.size());
+                    return dCard;
+                }
+            }
+        }
+
+        for (Map.Entry<GameMsgHandler.EPileType, CardPile> entry : cardPiles.entrySet()) {
+            CardPile cardPile = entry.getValue();
+            if (cardPile.contains(card)) {
+                dCardPosition.setPileType(entry.getKey());
+                dCardPosition.setPileIndex(cardPile.indexOf(card));
+                dCardPosition.setPileSize(cardPile.size());
+                return dCard;
+            }
+        }
+        return null;
+    }
+
+    public List<GameMsgHandler.DCard> getAllCardInfos() {
+        List<GameMsgHandler.DCard> cardInfos = new ArrayList<>();
+        for (Card card : getAllCards()) {
+            cardInfos.add(getCardInfo(card));
+        }
+        return cardInfos;
     }
 
     @Override

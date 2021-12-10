@@ -457,18 +457,12 @@ public class GameMsgHandler {
 		public static final String TypeName = "DCard";
 		
 		private long id;
-		private ECardType cardType;
 		private String sn;
-		private String name;
-		private int number;
 		private DCardPosition position;
 
 		public static class K {
 			public static final String id = "id";
-			public static final String cardType = "cardType";
 			public static final String sn = "sn";
-			public static final String name = "name";
-			public static final String number = "number";
 			public static final String position = "position";
 		}
 
@@ -479,10 +473,7 @@ public class GameMsgHandler {
 		@Override
 		protected void init() {
 			id = 0;
-			cardType = ECardType.Number;
 			sn = "";
-			name = "";
-			number = 0;
 			position = null;
 		}
 		
@@ -494,36 +485,12 @@ public class GameMsgHandler {
 			this.id = id;
 		}
 		
-		public ECardType getCardType() {
-			return cardType;
-		}
-		
-		public void setCardType(ECardType cardType) {
-			this.cardType = cardType;
-		}
-		
 		public String getSn() {
 			return sn;
 		}
 		
 		public void setSn(String sn) {
 			this.sn = sn;
-		}
-		
-		public String getName() {
-			return name;
-		}
-		
-		public void setName(String name) {
-			this.name = name;
-		}
-		
-		public int getNumber() {
-			return number;
-		}
-		
-		public void setNumber(int number) {
-			this.number = number;
 		}
 		
 		public DCardPosition getPosition() {
@@ -560,20 +527,14 @@ public class GameMsgHandler {
 		public void getRecord(JSONObject jsonObject) {
 			jsonObject.put(DSyncBase.K.TypeName, TypeName);
 			jsonObject.put(K.id, id);
-			jsonObject.put(K.cardType, cardType.ordinal());
 			jsonObject.put(K.sn, sn);
-			jsonObject.put(K.name, name);
-			jsonObject.put(K.number, number);
 			jsonObject.put(K.position, getJSONObject(position));
 		}
 
 		@Override
 		public void applyRecord(JSONObject jsonObject) {
 			id = jsonObject.getLongValue(K.id);
-			cardType = ECardType.values()[(jsonObject.getIntValue(K.cardType))];
 			sn = jsonObject.getString(K.sn);
-			name = jsonObject.getString(K.name);
-			number = jsonObject.getIntValue(K.number);
 			position = DCardPosition.parseJSONObject(jsonObject.getJSONObject(K.position));
 		}
 		
@@ -592,16 +553,7 @@ public class GameMsgHandler {
 			if (this.id != _value.id) {
 				return false;
 			}
-			if (!this.cardType.equals(_value.cardType)) {
-				return false;
-			}
 			if (!this.sn.equals(_value.sn)) {
-				return false;
-			}
-			if (!this.name.equals(_value.name)) {
-				return false;
-			}
-			if (this.number != _value.number) {
 				return false;
 			}
 			if (!this.position.equals(_value.position)) {
@@ -613,10 +565,7 @@ public class GameMsgHandler {
 		public DCard copy() {
 			DCard _value = new DCard();
 			_value.id = this.id;
-			_value.cardType = this.cardType;
 			_value.sn = this.sn;
-			_value.name = this.name;
-			_value.number = this.number;
 			_value.position = this.position;
 			return _value;
 		}
@@ -624,10 +573,7 @@ public class GameMsgHandler {
 		public DCard deepCopy() {
 			DCard _value = new DCard();
 			_value.id = this.id;
-			_value.cardType = this.cardType;
 			_value.sn = this.sn;
-			_value.name = this.name;
-			_value.number = this.number;
 			if (this.position != null) {
 				_value.position = this.position.deepCopy();
 			}
@@ -639,11 +585,13 @@ public class GameMsgHandler {
 		public static final String TypeName = "DCardPosition";
 		
 		private String ownerToken;
-		private String pileIndex;
-		private String pileSize;
+		private EPileType pileType;
+		private int pileIndex;
+		private int pileSize;
 
 		public static class K {
 			public static final String ownerToken = "ownerToken";
+			public static final String pileType = "pileType";
 			public static final String pileIndex = "pileIndex";
 			public static final String pileSize = "pileSize";
 		}
@@ -655,8 +603,9 @@ public class GameMsgHandler {
 		@Override
 		protected void init() {
 			ownerToken = "";
-			pileIndex = "";
-			pileSize = "";
+			pileType = EPileType.NumberShop;
+			pileIndex = 0;
+			pileSize = 0;
 		}
 		
 		public String getOwnerToken() {
@@ -667,19 +616,27 @@ public class GameMsgHandler {
 			this.ownerToken = ownerToken;
 		}
 		
-		public String getPileIndex() {
+		public EPileType getPileType() {
+			return pileType;
+		}
+		
+		public void setPileType(EPileType pileType) {
+			this.pileType = pileType;
+		}
+		
+		public int getPileIndex() {
 			return pileIndex;
 		}
 		
-		public void setPileIndex(String pileIndex) {
+		public void setPileIndex(int pileIndex) {
 			this.pileIndex = pileIndex;
 		}
 		
-		public String getPileSize() {
+		public int getPileSize() {
 			return pileSize;
 		}
 		
-		public void setPileSize(String pileSize) {
+		public void setPileSize(int pileSize) {
 			this.pileSize = pileSize;
 		}
 		
@@ -709,6 +666,7 @@ public class GameMsgHandler {
 		public void getRecord(JSONObject jsonObject) {
 			jsonObject.put(DSyncBase.K.TypeName, TypeName);
 			jsonObject.put(K.ownerToken, ownerToken);
+			jsonObject.put(K.pileType, pileType.ordinal());
 			jsonObject.put(K.pileIndex, pileIndex);
 			jsonObject.put(K.pileSize, pileSize);
 		}
@@ -716,8 +674,9 @@ public class GameMsgHandler {
 		@Override
 		public void applyRecord(JSONObject jsonObject) {
 			ownerToken = jsonObject.getString(K.ownerToken);
-			pileIndex = jsonObject.getString(K.pileIndex);
-			pileSize = jsonObject.getString(K.pileSize);
+			pileType = EPileType.values()[(jsonObject.getIntValue(K.pileType))];
+			pileIndex = jsonObject.getIntValue(K.pileIndex);
+			pileSize = jsonObject.getIntValue(K.pileSize);
 		}
 		
 		@Override
@@ -735,10 +694,13 @@ public class GameMsgHandler {
 			if (!this.ownerToken.equals(_value.ownerToken)) {
 				return false;
 			}
-			if (!this.pileIndex.equals(_value.pileIndex)) {
+			if (!this.pileType.equals(_value.pileType)) {
 				return false;
 			}
-			if (!this.pileSize.equals(_value.pileSize)) {
+			if (this.pileIndex != _value.pileIndex) {
+				return false;
+			}
+			if (this.pileSize != _value.pileSize) {
 				return false;
 			}
 			return true;
@@ -747,6 +709,7 @@ public class GameMsgHandler {
 		public DCardPosition copy() {
 			DCardPosition _value = new DCardPosition();
 			_value.ownerToken = this.ownerToken;
+			_value.pileType = this.pileType;
 			_value.pileIndex = this.pileIndex;
 			_value.pileSize = this.pileSize;
 			return _value;
@@ -755,6 +718,7 @@ public class GameMsgHandler {
 		public DCardPosition deepCopy() {
 			DCardPosition _value = new DCardPosition();
 			_value.ownerToken = this.ownerToken;
+			_value.pileType = this.pileType;
 			_value.pileIndex = this.pileIndex;
 			_value.pileSize = this.pileSize;
 			return _value;
@@ -945,6 +909,17 @@ public class GameMsgHandler {
 	public static enum ECardType {
 		Number,
 		Monster,
+	}
+	public static enum EPileType {
+		NumberShop,
+		NumberPile,
+		NumberDiscardPile,
+		MonsterShop,
+		MonsterPile,
+		MonsterDiscardPile,
+		Hand,
+		Gate,
+		FieldMonster,
 	}
 
 

@@ -1,5 +1,6 @@
 package com.backinfile.support;
 
+import com.backinfile.support.func.Action1;
 import com.backinfile.support.func.Function1;
 import com.backinfile.support.func.Predicate;
 
@@ -12,6 +13,12 @@ public class StreamUtils {
             result.add(function.invoke(t));
         }
         return result;
+    }
+
+    public static <T, R> void map(Collection<T> collection, Action1<T> function) {
+        for (T t : collection) {
+            function.invoke(t);
+        }
     }
 
     public static <T> List<T> filter(Collection<T> collection, Predicate<T> predicate) {
