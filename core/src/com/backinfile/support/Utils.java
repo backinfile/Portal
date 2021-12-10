@@ -5,12 +5,14 @@ import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.Scanner;
 
 public class Utils {
     public static final String UTF8 = "utf-8";
     private static final Random RANDOM = new Random();
-    public static final String LETTER_AND_NUMBER = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
     public static final String NUMBER = "1234567890";
+    public static final String LETTER = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    public static final String LETTER_AND_NUMBER = LETTER + NUMBER;
     public static final int TOKEN_LENGTH = 16;
 
     public static boolean isNullOrEmpty(String str) {
@@ -200,5 +202,15 @@ public class Utils {
 
     public static void resetId() {
         idMax = 1;
+    }
+
+    public static void readExit() {
+        Scanner scanner = new Scanner(System.in);
+        while (true) {
+            String msg = scanner.next();
+            if (msg.equals("exit")) {
+                break;
+            }
+        }
     }
 }

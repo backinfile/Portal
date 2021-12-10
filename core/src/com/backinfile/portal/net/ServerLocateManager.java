@@ -5,7 +5,6 @@ import com.backinfile.portal.Settings;
 import com.backinfile.support.Time2;
 import com.backinfile.support.Utils;
 import io.netty.bootstrap.Bootstrap;
-import io.netty.buffer.Unpooled;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.EventLoopGroup;
@@ -15,10 +14,15 @@ import io.netty.channel.socket.DatagramPacket;
 import io.netty.channel.socket.nio.NioDatagramChannel;
 
 import java.net.InetSocketAddress;
-import java.nio.charset.StandardCharsets;
+import java.util.Set;
+import java.util.concurrent.CopyOnWriteArraySet;
 
 public class ServerLocateManager {
-    public static String serverAddress = "";
+    private static final String SEARCH_CODE = "search";
+    private static final String SERVER_RESPONSE_CODE = "server";
+    private static final long CLIENT_REQUEST_INTERVAL = Time2.SEC * 3;
+
+    public static Set<String> serverAddressList = new CopyOnWriteArraySet<>();
 
     private static Channel serverChannel = null;
     private static Channel clientChannel = null;
@@ -28,7 +32,7 @@ public class ServerLocateManager {
             Bootstrap bootstrap = new Bootstrap();
             EventLoopGroup eventLoopGroup = new NioEventLoopGroup();
             bootstrap.group(eventLoopGroup).channel(NioDatagramChannel.class).handler(new ClientDatagramHandler());
-            clientChannel = bootstrap.bind(Settings.GAME_SERVER_UDP_PORT).sync().channel();
+            clientChannel = bootstrap.bind(Settings.GAME_CLIENT_UDP_PORT).sync().channel();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -61,10 +65,30 @@ public class ServerLocateManager {
 
 
     static class ServerDatagramHandler extends SimpleChannelInboundHandler<DatagramPacket> {
+
+        @Override
+        public void channelActive(ChannelHandlerContext ctx) throws Exception {
+            super.channelActive(ctx);
+            Log.net.info("server udp start response");
+        }
+
         @Override
         protected void channelRead0(ChannelHandlerContext ctx, DatagramPacket msg) throws Exception {
             String ip = msg.sender().getAddress().getHostAddress();
-            Log.net.info("server udp read from {}", ip);
+
+            String content = NetUtils.getString(msg);
+            if (!content.equals(SEARCH_CODE)) {
+                return;
+            }
+            DatagramPacket response = NetUtils.buildMsg(SERVER_RESPONSE_CODE, new InetSocketAddress(ip, Settings.GAME_CLIENT_UDP_PORT));
+            ctx.writeAndFlush(response);
+            Log.net.info("server udp read from {}, response finish", ip);
+        }
+
+        @Override
+        public void channelInactive(ChannelHandlerContext ctx) throws Exception {
+            super.channelInactive(ctx);
+            Log.net.info("server udp stop response");
         }
     }
 
@@ -75,20 +99,37 @@ public class ServerLocateManager {
         @Override
         public void channelActive(ChannelHandlerContext ctx) throws Exception {
             super.channelActive(ctx);
-
             clientSearchThread = new ClientSearchThread(ctx.channel());
             clientSearchThread.start();
+            Log.net.info("client udp start search");
         }
 
         @Override
         protected void channelRead0(ChannelHandlerContext ctx, DatagramPacket msg) throws Exception {
             String ip = msg.sender().getAddress().getHostAddress();
-            Log.net.info("udp read from {}", ip);
+            String content = NetUtils.getString(msg);
+            Log.net.info("client udp read from {} content {}", ip, content);
+            if (content.equals(SERVER_RESPONSE_CODE)) {
+                ServerLocateManager.serverAddressList.add(ip);
+                Log.net.info("locate server:{}", ip);
+                if (clientSearchThread != null) {
+                    clientSearchThread.stopSearch();
+                }
+            }
+        }
+
+        @Override
+        public void channelInactive(ChannelHandlerContext ctx) throws Exception {
+            super.channelInactive(ctx);
+            if (clientSearchThread != null) {
+                clientSearchThread.stopSearch();
+            }
+            Log.net.info("client udp stop search");
         }
     }
 
     static class ClientSearchThread extends Thread {
-        private boolean stop = false;
+        private volatile boolean stop = false;
         private final Channel channel;
 
         public ClientSearchThread(Channel channel) {
@@ -101,13 +142,14 @@ public class ServerLocateManager {
                 if (stop) {
                     break;
                 }
-                if (!Utils.isNullOrEmpty(ServerLocateManager.serverAddress)) {
+                if (!ServerLocateManager.serverAddressList.isEmpty()) {
                     break;
                 }
 
-                new DatagramPacket(Unpooled.copiedBuffer("search", StandardCharsets.UTF_8), new InetSocketAddress("", 100));
-
-                Utils.sleep(Time2.SEC);
+                DatagramPacket datagramPacket = NetUtils.buildBroadcastMsg(SEARCH_CODE);
+                channel.writeAndFlush(datagramPacket);
+                Log.net.info("client udp send request for search server");
+                Utils.sleep(CLIENT_REQUEST_INTERVAL);
             }
         }
 

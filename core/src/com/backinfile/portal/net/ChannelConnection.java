@@ -1,5 +1,6 @@
 package com.backinfile.portal.net;
 
+import com.backinfile.portal.Log;
 import com.backinfile.support.Time2;
 import com.backinfile.support.Utils;
 import io.netty.channel.Channel;
@@ -11,9 +12,9 @@ import java.util.concurrent.TimeUnit;
 public class ChannelConnection implements Delayed, Connection {
     public static final String TAG = ChannelConnection.class.getSimpleName();
 
-    private Channel channel;
-    private ConcurrentLinkedQueue<GameMessage> sendList = new ConcurrentLinkedQueue<GameMessage>();
-    private ConcurrentLinkedQueue<byte[]> inputList = new ConcurrentLinkedQueue<>();
+    private final Channel channel;
+    private final ConcurrentLinkedQueue<GameMessage> sendList = new ConcurrentLinkedQueue<>();
+    private final ConcurrentLinkedQueue<byte[]> inputList = new ConcurrentLinkedQueue<>();
     private long time;
     public static final int HZ = 1;
 
