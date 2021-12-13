@@ -6,6 +6,7 @@ import com.backinfile.support.Tuple2;
 import com.backinfile.support.func.Predicate;
 
 import java.util.*;
+import java.util.stream.Stream;
 
 public class CardPile implements Iterable<Card> {
     private final LinkedList<Card> cards = new LinkedList<>();
@@ -67,6 +68,10 @@ public class CardPile implements Iterable<Card> {
             return cards.remove(card);
         }
         return false;
+    }
+
+    public Card remove(int index) {
+        return cards.remove(index);
     }
 
     public boolean removeAll(Predicate<Card> predicate) {
@@ -233,5 +238,8 @@ public class CardPile implements Iterable<Card> {
         return new CardPile(this);
     }
 
+    public Stream<Card> stream() {
+        return cards.stream();
+    }
 }
 

@@ -11,16 +11,11 @@ public class Card {
     public Card() {
     }
 
+    public boolean isNumberCard() {
+        return localCardString.cardType == CardType.Number;
+    }
 
-    public static class NumberCard extends Card {
-        private final int number;
-
-        public NumberCard(int number) {
-            this.number = number;
-        }
-
-        public int getNumber() {
-            return number;
-        }
+    public boolean isMonsterCard() {
+        return localCardString.cardType == CardType.Monster;
     }
 }

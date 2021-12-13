@@ -95,6 +95,7 @@ public class LocalString {
 
         public CardType cardType = CardType.Monster;
         public int number;
+        public boolean refreshMonster = false;
         public DCost cost = null;
         public DSkill[] skills = null;
         public int vectorPoint = 0;

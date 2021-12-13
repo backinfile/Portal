@@ -8,11 +8,11 @@ public abstract class GameAction implements IAction {
 
     @AutoSet
     public Board board;
-    @AutoSet
-    public Human human;
 
+    public Human human;
     public Card card;
     public int number;
+    public int position;
 
     @Override
     public boolean isDone() {

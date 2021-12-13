@@ -19,6 +19,7 @@ public class Human extends HumanOperContainer {
     public int winPoint = 0;
     public int diamond = 0;
     public int actionPointResetValue = 3;
+    public int gateSlotNumber = 2;
 
     public CardPile handPile = new CardPile();
     public CardPile gatePile = new CardPile();
@@ -82,6 +83,7 @@ public class Human extends HumanOperContainer {
 
     @Override
     public void addHumanOper(HumanOper humanOper) {
+        humanOper.board = board;
         humanOper.human = this;
         Log.game.info("attach humanOper {} for {}", humanOper.getClass().getSimpleName(), getToken());
         super.addHumanOper(humanOper);

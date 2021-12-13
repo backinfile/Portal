@@ -34,10 +34,10 @@ struct DCardPosition {
 
 enum EPileType {
 	NumberShop,
-	NumberPile,
+	NumberDrawPile,
 	NumberDiscardPile,
 	MonsterShop,
-	MonsterPile,
+	MonsterDrawPile,
 	MonsterDiscardPile,
 	Hand,
 	Gate,
@@ -51,4 +51,36 @@ struct DHuman {
     int diamond;
     int handPileSize;
     int monsterPileSize;
+	
+	DPlayerDetail detail;
+}
+
+struct DPlayerDetail {
+	String name;
+}
+
+message SCInTurnAction {
+	long[] buildableMonsters;
+}
+message CSInTurnAction {
+	EInTurnActionType type;
+	int position; // -1表示从牌库顶抽取
+}
+
+enum EInTurnActionType {
+	TurnEnd,
+	GainNumberCard,
+	GainMonsterCard,
+	RefreshNumberPile,
+	BuildMonster,
+}
+
+message SCSelectCards {
+	long[] idList;
+	int minNumber;
+	int maxNumber;
+	String tip;
+}
+message CSSelectCards {
+	long[] idList;
 }

@@ -13,10 +13,10 @@ public class Board implements IAlive {
 
     public int monsterCardSlotNumber = 2;
     public int numberCardSlotNumber = 5;
-    public final CardPile monsterPile = new CardPile();
+    public final CardPile monsterDrawPile = new CardPile();
     public final CardPile monsterShop = new CardPile();
     public final CardPile monsterDiscardPile = new CardPile();
-    public final CardPile numberPile = new CardPile();
+    public final CardPile numberDrawPile = new CardPile();
     public final CardPile numberShop = new CardPile();
     public final CardPile numberDiscardPile = new CardPile();
     private final HashMap<GameMsgHandler.EPileType, CardPile> cardPiles = new HashMap<>();
@@ -39,22 +39,21 @@ public class Board implements IAlive {
             action.board = this;
         });
 
-        cardPiles.put(GameMsgHandler.EPileType.NumberPile, numberPile);
+        cardPiles.put(GameMsgHandler.EPileType.NumberDrawPile, numberDrawPile);
         cardPiles.put(GameMsgHandler.EPileType.NumberShop, numberShop);
         cardPiles.put(GameMsgHandler.EPileType.NumberDiscardPile, numberDiscardPile);
         cardPiles.put(GameMsgHandler.EPileType.MonsterShop, monsterShop);
-        cardPiles.put(GameMsgHandler.EPileType.MonsterPile, monsterPile);
+        cardPiles.put(GameMsgHandler.EPileType.MonsterDrawPile, monsterDrawPile);
         cardPiles.put(GameMsgHandler.EPileType.MonsterDiscardPile, monsterDiscardPile);
 
-        monsterShop.shuffle(random);
-        numberShop.shuffle(random);
+        monsterDrawPile.shuffle(random);
+        numberDrawPile.shuffle(random);
         for (int i = 0; i < monsterCardSlotNumber; i++) {
-            monsterPile.add(monsterShop.pollTop());
+            monsterShop.add(monsterDrawPile.pollTop());
         }
         for (int i = 0; i < numberCardSlotNumber; i++) {
-            numberPile.add(numberShop.pollTop());
+            numberShop.add(numberDrawPile.pollTop());
         }
-
     }
 
     @Override
@@ -62,31 +61,11 @@ public class Board implements IAlive {
         state = BoardState.GamePrepare;
 
         for (Human human : humanList) {
+            human.board = this;
             sendBoardInitMsg(human.getToken());
         }
     }
 
-    public void sendBoardInitMsg(String toHumanToken) {
-        GameMsgHandler.SCBoardInit boardInit = new GameMsgHandler.SCBoardInit();
-        boardInit.setHumans(getHumanData(toHumanToken));
-        boardInit.setCards(getAllCardInfo(toHumanToken));
-        sendMessage(toHumanToken, boardInit);
-    }
-
-    private GameMsgHandler.SCHumanUpdate getHumanData(String token) {
-        GameMsgHandler.SCHumanUpdate humanUpdate = new GameMsgHandler.SCHumanUpdate();
-        for (Human human : humanList) {
-            GameMsgHandler.DHuman dHuman = new GameMsgHandler.DHuman();
-            dHuman.setToken(human.getToken());
-            dHuman.setActionPoint(human.actionPoint);
-            dHuman.setWinPoint(human.winPoint);
-            dHuman.setDiamond(human.diamond);
-            dHuman.setHandPileSize(human.handPile.size());
-            dHuman.setMonsterPileSize(human.fieldMonsterPile.size());
-            humanUpdate.addHumans(human);
-        }
-        return humanUpdate;
-    }
 
     private GameMsgHandler.SCCardsMove getAllCardInfo(String token) {
         GameMsgHandler.SCCardsMove cardsMove = new GameMsgHandler.SCCardsMove();
@@ -265,4 +244,42 @@ public class Board implements IAlive {
         outputMsgMap.computeIfAbsent(token, key -> new LinkedList<>()).add(msg.toMessage());
     }
 
+    public void modify(CardPile cardPile) {
+        GameMsgHandler.SCCardsMove scCardsMove = new GameMsgHandler.SCCardsMove();
+        for (Card card : cardPile) {
+            scCardsMove.addCards(getCardInfo(card));
+        }
+        for (Human human : humanList) {
+            sendMessage(human.getToken(), scCardsMove);
+        }
+        for (Human human : humanList) {
+            sendMessage(human.getToken(), getHumanData(human.getToken()));
+        }
+    }
+
+    public void modify(Card... cards) {
+        modify(new CardPile(cards));
+    }
+
+    public void sendBoardInitMsg(String toHumanToken) {
+        GameMsgHandler.SCBoardInit boardInit = new GameMsgHandler.SCBoardInit();
+        boardInit.setHumans(getHumanData(toHumanToken));
+        boardInit.setCards(getAllCardInfo(toHumanToken));
+        sendMessage(toHumanToken, boardInit);
+    }
+
+    private GameMsgHandler.SCHumanUpdate getHumanData(String token) {
+        GameMsgHandler.SCHumanUpdate humanUpdate = new GameMsgHandler.SCHumanUpdate();
+        for (Human human : humanList) {
+            GameMsgHandler.DHuman dHuman = new GameMsgHandler.DHuman();
+            dHuman.setToken(human.getToken());
+            dHuman.setActionPoint(human.actionPoint);
+            dHuman.setWinPoint(human.winPoint);
+            dHuman.setDiamond(human.diamond);
+            dHuman.setHandPileSize(human.handPile.size());
+            dHuman.setMonsterPileSize(human.fieldMonsterPile.size());
+            humanUpdate.addHumans(dHuman);
+        }
+        return humanUpdate;
+    }
 }

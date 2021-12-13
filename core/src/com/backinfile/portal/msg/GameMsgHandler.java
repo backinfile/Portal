@@ -29,7 +29,23 @@ public class GameMsgHandler {
 			return false;
 		}
 
+		default boolean onMessage(GameMsgHandler handler, CSSelectCards msg) {
+			return false;
+		}
+
 		default boolean onMessage(GameMsgHandler handler, SCBoardInit msg) {
+			return false;
+		}
+
+		default boolean onMessage(GameMsgHandler handler, SCInTurnAction msg) {
+			return false;
+		}
+
+		default boolean onMessage(GameMsgHandler handler, SCSelectCards msg) {
+			return false;
+		}
+
+		default boolean onMessage(GameMsgHandler handler, CSInTurnAction msg) {
 			return false;
 		}
 
@@ -52,9 +68,41 @@ public class GameMsgHandler {
 				}
 			}
 			break;
+		case CSSelectCards.TypeName:
+			for (DSyncListener listener : listeners) {
+				handle |= listener.onMessage(this, CSSelectCards.parseJSONObject(jsonObject));
+				if (once && handle) {
+					return true;
+				}
+			}
+			break;
 		case SCBoardInit.TypeName:
 			for (DSyncListener listener : listeners) {
 				handle |= listener.onMessage(this, SCBoardInit.parseJSONObject(jsonObject));
+				if (once && handle) {
+					return true;
+				}
+			}
+			break;
+		case SCInTurnAction.TypeName:
+			for (DSyncListener listener : listeners) {
+				handle |= listener.onMessage(this, SCInTurnAction.parseJSONObject(jsonObject));
+				if (once && handle) {
+					return true;
+				}
+			}
+			break;
+		case SCSelectCards.TypeName:
+			for (DSyncListener listener : listeners) {
+				handle |= listener.onMessage(this, SCSelectCards.parseJSONObject(jsonObject));
+				if (once && handle) {
+					return true;
+				}
+			}
+			break;
+		case CSInTurnAction.TypeName:
+			for (DSyncListener listener : listeners) {
+				handle |= listener.onMessage(this, CSInTurnAction.parseJSONObject(jsonObject));
 				if (once && handle) {
 					return true;
 				}
@@ -80,14 +128,24 @@ public class GameMsgHandler {
 		switch (typeName) {
 		case SCHumanUpdate.TypeName:
 			return SCHumanUpdate.parseJSONObject(jsonObject);
+		case CSSelectCards.TypeName:
+			return CSSelectCards.parseJSONObject(jsonObject);
 		case SCBoardInit.TypeName:
 			return SCBoardInit.parseJSONObject(jsonObject);
-		case SCCardsMove.TypeName:
-			return SCCardsMove.parseJSONObject(jsonObject);
 		case DCard.TypeName:
 			return DCard.parseJSONObject(jsonObject);
 		case DCardPosition.TypeName:
 			return DCardPosition.parseJSONObject(jsonObject);
+		case SCInTurnAction.TypeName:
+			return SCInTurnAction.parseJSONObject(jsonObject);
+		case SCSelectCards.TypeName:
+			return SCSelectCards.parseJSONObject(jsonObject);
+		case DPlayerDetail.TypeName:
+			return DPlayerDetail.parseJSONObject(jsonObject);
+		case CSInTurnAction.TypeName:
+			return CSInTurnAction.parseJSONObject(jsonObject);
+		case SCCardsMove.TypeName:
+			return SCCardsMove.parseJSONObject(jsonObject);
 		case DHuman.TypeName:
 			return DHuman.parseJSONObject(jsonObject);
 		}
@@ -98,14 +156,24 @@ public class GameMsgHandler {
 		switch (typeName) {
 		case SCHumanUpdate.TypeName:
 			return new SCHumanUpdate();
+		case CSSelectCards.TypeName:
+			return new CSSelectCards();
 		case SCBoardInit.TypeName:
 			return new SCBoardInit();
-		case SCCardsMove.TypeName:
-			return new SCCardsMove();
 		case DCard.TypeName:
 			return new DCard();
 		case DCardPosition.TypeName:
 			return new DCardPosition();
+		case SCInTurnAction.TypeName:
+			return new SCInTurnAction();
+		case SCSelectCards.TypeName:
+			return new SCSelectCards();
+		case DPlayerDetail.TypeName:
+			return new DPlayerDetail();
+		case CSInTurnAction.TypeName:
+			return new CSInTurnAction();
+		case SCCardsMove.TypeName:
+			return new SCCardsMove();
 		case DHuman.TypeName:
 			return new DHuman();
 		default:
@@ -227,6 +295,113 @@ public class GameMsgHandler {
 		}
 	}
 	
+	public static class CSSelectCards extends DSyncBase {
+		public static final String TypeName = "CSSelectCards";
+		
+		private List<Long> idList;
+
+		public static class K {
+			public static final String idList = "idList";
+		}
+
+		public CSSelectCards() {
+			init();
+		}
+
+		@Override
+		protected void init() {
+			idList = new ArrayList<>();
+		}
+		
+		public int getIdListCount() {
+			return this.idList.size();
+		}
+		
+		public List<Long> getIdListList() {
+			return new ArrayList<>(idList);
+		}
+		
+		public void setIdListList(List<Long> idList) {
+			this.idList.clear();
+			this.idList.addAll(idList);
+		}
+
+		public void addIdList(long idList) {
+			this.idList.add(idList);
+		}
+		
+		public void addAllIdList(List<Long> idList) {
+			this.idList.addAll(idList);
+		}
+		
+		public void clearIdList() {
+			this.idList.clear();
+		}
+		
+
+		public static CSSelectCards parseJSONObject(JSONObject jsonObject) {
+			CSSelectCards _value = new CSSelectCards();
+			if (!jsonObject.isEmpty()) {
+				_value.applyRecord(jsonObject);
+			}
+			return _value;
+		}
+		
+		public static List<CSSelectCards> parseJSONArray(JSONArray jsonArray) {
+			ArrayList<CSSelectCards> list = new ArrayList<CSSelectCards>();
+			for (int i = 0; i < jsonArray.size(); i++) {
+				CSSelectCards _value = new CSSelectCards();
+				JSONObject jsonObject = jsonArray.getJSONObject(i);
+				if (!jsonObject.isEmpty()) {
+					_value.applyRecord(jsonObject);
+				}
+				list.add(_value);
+			}
+			return list;
+		}
+
+		@Override
+		public void getRecord(JSONObject jsonObject) {
+			jsonObject.put(DSyncBase.K.TypeName, TypeName);
+			jsonObject.put(K.idList, JSONObject.toJSONString(idList));
+		}
+
+		@Override
+		public void applyRecord(JSONObject jsonObject) {
+			idList = JSONObject.parseArray(jsonObject.getString(K.idList), Long.class);
+		}
+		
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj) {
+				return true;
+			}
+			if (obj == null) {
+				return false;
+			}
+			if (!(obj instanceof CSSelectCards)) {
+				return false;
+			}
+			CSSelectCards _value = (CSSelectCards) obj;
+			if (!this.idList.equals(_value.idList)) {
+				return false;
+			}
+			return true;
+		}
+		
+		public CSSelectCards copy() {
+			CSSelectCards _value = new CSSelectCards();
+			_value.idList = new ArrayList<>(this.idList);
+			return _value;
+		}
+		
+		public CSSelectCards deepCopy() {
+			CSSelectCards _value = new CSSelectCards();
+			_value.idList = new ArrayList<>(this.idList);
+			return _value;
+		}
+	}
+	
 	public static class SCBoardInit extends DSyncBase {
 		public static final String TypeName = "SCBoardInit";
 		
@@ -334,120 +509,6 @@ public class GameMsgHandler {
 			}
 			if (this.cards != null) {
 				_value.cards = this.cards.deepCopy();
-			}
-			return _value;
-		}
-	}
-	
-	public static class SCCardsMove extends DSyncBase {
-		public static final String TypeName = "SCCardsMove";
-		
-		private List<DCard> cards;
-
-		public static class K {
-			public static final String cards = "cards";
-		}
-
-		public SCCardsMove() {
-			init();
-		}
-
-		@Override
-		protected void init() {
-			cards = new ArrayList<>();
-		}
-		
-		public int getCardsCount() {
-			return this.cards.size();
-		}
-		
-		public List<DCard> getCardsList() {
-			return new ArrayList<>(cards);
-		}
-		
-		public void setCardsList(List<DCard> cards) {
-			this.cards.clear();
-			this.cards.addAll(cards);
-		}
-
-		public void addCards(DCard cards) {
-			this.cards.add(cards);
-		}
-		
-		public void addAllCards(List<DCard> cards) {
-			this.cards.addAll(cards);
-		}
-		
-		public void clearCards() {
-			this.cards.clear();
-		}
-		
-
-		public static SCCardsMove parseJSONObject(JSONObject jsonObject) {
-			SCCardsMove _value = new SCCardsMove();
-			if (!jsonObject.isEmpty()) {
-				_value.applyRecord(jsonObject);
-			}
-			return _value;
-		}
-		
-		public static List<SCCardsMove> parseJSONArray(JSONArray jsonArray) {
-			ArrayList<SCCardsMove> list = new ArrayList<SCCardsMove>();
-			for (int i = 0; i < jsonArray.size(); i++) {
-				SCCardsMove _value = new SCCardsMove();
-				JSONObject jsonObject = jsonArray.getJSONObject(i);
-				if (!jsonObject.isEmpty()) {
-					_value.applyRecord(jsonObject);
-				}
-				list.add(_value);
-			}
-			return list;
-		}
-
-		@Override
-		public void getRecord(JSONObject jsonObject) {
-			jsonObject.put(DSyncBase.K.TypeName, TypeName);
-			jsonObject.put(K.cards, getJSONArray(cards));
-		}
-
-		@Override
-		public void applyRecord(JSONObject jsonObject) {
-			cards = DCard.parseJSONArray(jsonObject.getJSONArray(K.cards));
-		}
-		
-		@Override
-		public boolean equals(Object obj) {
-			if (this == obj) {
-				return true;
-			}
-			if (obj == null) {
-				return false;
-			}
-			if (!(obj instanceof SCCardsMove)) {
-				return false;
-			}
-			SCCardsMove _value = (SCCardsMove) obj;
-			if (!this.cards.equals(_value.cards)) {
-				return false;
-			}
-			return true;
-		}
-		
-		public SCCardsMove copy() {
-			SCCardsMove _value = new SCCardsMove();
-			_value.cards = new ArrayList<>(this.cards);
-			return _value;
-		}
-		
-		public SCCardsMove deepCopy() {
-			SCCardsMove _value = new SCCardsMove();
-			_value.cards = new ArrayList<>();
-			for(DCard _f: this.cards) {
-				if (_f != null) {
-					_value.cards.add(_f.deepCopy());
-				} else {
-					_value.cards.add(null);
-				}
 			}
 			return _value;
 		}
@@ -725,6 +786,589 @@ public class GameMsgHandler {
 		}
 	}
 	
+	public static class SCInTurnAction extends DSyncBase {
+		public static final String TypeName = "SCInTurnAction";
+		
+		private List<Long> buildableMonsters;
+
+		public static class K {
+			public static final String buildableMonsters = "buildableMonsters";
+		}
+
+		public SCInTurnAction() {
+			init();
+		}
+
+		@Override
+		protected void init() {
+			buildableMonsters = new ArrayList<>();
+		}
+		
+		public int getBuildableMonstersCount() {
+			return this.buildableMonsters.size();
+		}
+		
+		public List<Long> getBuildableMonstersList() {
+			return new ArrayList<>(buildableMonsters);
+		}
+		
+		public void setBuildableMonstersList(List<Long> buildableMonsters) {
+			this.buildableMonsters.clear();
+			this.buildableMonsters.addAll(buildableMonsters);
+		}
+
+		public void addBuildableMonsters(long buildableMonsters) {
+			this.buildableMonsters.add(buildableMonsters);
+		}
+		
+		public void addAllBuildableMonsters(List<Long> buildableMonsters) {
+			this.buildableMonsters.addAll(buildableMonsters);
+		}
+		
+		public void clearBuildableMonsters() {
+			this.buildableMonsters.clear();
+		}
+		
+
+		public static SCInTurnAction parseJSONObject(JSONObject jsonObject) {
+			SCInTurnAction _value = new SCInTurnAction();
+			if (!jsonObject.isEmpty()) {
+				_value.applyRecord(jsonObject);
+			}
+			return _value;
+		}
+		
+		public static List<SCInTurnAction> parseJSONArray(JSONArray jsonArray) {
+			ArrayList<SCInTurnAction> list = new ArrayList<SCInTurnAction>();
+			for (int i = 0; i < jsonArray.size(); i++) {
+				SCInTurnAction _value = new SCInTurnAction();
+				JSONObject jsonObject = jsonArray.getJSONObject(i);
+				if (!jsonObject.isEmpty()) {
+					_value.applyRecord(jsonObject);
+				}
+				list.add(_value);
+			}
+			return list;
+		}
+
+		@Override
+		public void getRecord(JSONObject jsonObject) {
+			jsonObject.put(DSyncBase.K.TypeName, TypeName);
+			jsonObject.put(K.buildableMonsters, JSONObject.toJSONString(buildableMonsters));
+		}
+
+		@Override
+		public void applyRecord(JSONObject jsonObject) {
+			buildableMonsters = JSONObject.parseArray(jsonObject.getString(K.buildableMonsters), Long.class);
+		}
+		
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj) {
+				return true;
+			}
+			if (obj == null) {
+				return false;
+			}
+			if (!(obj instanceof SCInTurnAction)) {
+				return false;
+			}
+			SCInTurnAction _value = (SCInTurnAction) obj;
+			if (!this.buildableMonsters.equals(_value.buildableMonsters)) {
+				return false;
+			}
+			return true;
+		}
+		
+		public SCInTurnAction copy() {
+			SCInTurnAction _value = new SCInTurnAction();
+			_value.buildableMonsters = new ArrayList<>(this.buildableMonsters);
+			return _value;
+		}
+		
+		public SCInTurnAction deepCopy() {
+			SCInTurnAction _value = new SCInTurnAction();
+			_value.buildableMonsters = new ArrayList<>(this.buildableMonsters);
+			return _value;
+		}
+	}
+	
+	public static class SCSelectCards extends DSyncBase {
+		public static final String TypeName = "SCSelectCards";
+		
+		private List<Long> idList;
+		private int minNumber;
+		private int maxNumber;
+		private String tip;
+
+		public static class K {
+			public static final String idList = "idList";
+			public static final String minNumber = "minNumber";
+			public static final String maxNumber = "maxNumber";
+			public static final String tip = "tip";
+		}
+
+		public SCSelectCards() {
+			init();
+		}
+
+		@Override
+		protected void init() {
+			idList = new ArrayList<>();
+			minNumber = 0;
+			maxNumber = 0;
+			tip = "";
+		}
+		
+		public int getIdListCount() {
+			return this.idList.size();
+		}
+		
+		public List<Long> getIdListList() {
+			return new ArrayList<>(idList);
+		}
+		
+		public void setIdListList(List<Long> idList) {
+			this.idList.clear();
+			this.idList.addAll(idList);
+		}
+
+		public void addIdList(long idList) {
+			this.idList.add(idList);
+		}
+		
+		public void addAllIdList(List<Long> idList) {
+			this.idList.addAll(idList);
+		}
+		
+		public void clearIdList() {
+			this.idList.clear();
+		}
+		
+		public int getMinNumber() {
+			return minNumber;
+		}
+		
+		public void setMinNumber(int minNumber) {
+			this.minNumber = minNumber;
+		}
+		
+		public int getMaxNumber() {
+			return maxNumber;
+		}
+		
+		public void setMaxNumber(int maxNumber) {
+			this.maxNumber = maxNumber;
+		}
+		
+		public String getTip() {
+			return tip;
+		}
+		
+		public void setTip(String tip) {
+			this.tip = tip;
+		}
+		
+
+		public static SCSelectCards parseJSONObject(JSONObject jsonObject) {
+			SCSelectCards _value = new SCSelectCards();
+			if (!jsonObject.isEmpty()) {
+				_value.applyRecord(jsonObject);
+			}
+			return _value;
+		}
+		
+		public static List<SCSelectCards> parseJSONArray(JSONArray jsonArray) {
+			ArrayList<SCSelectCards> list = new ArrayList<SCSelectCards>();
+			for (int i = 0; i < jsonArray.size(); i++) {
+				SCSelectCards _value = new SCSelectCards();
+				JSONObject jsonObject = jsonArray.getJSONObject(i);
+				if (!jsonObject.isEmpty()) {
+					_value.applyRecord(jsonObject);
+				}
+				list.add(_value);
+			}
+			return list;
+		}
+
+		@Override
+		public void getRecord(JSONObject jsonObject) {
+			jsonObject.put(DSyncBase.K.TypeName, TypeName);
+			jsonObject.put(K.idList, JSONObject.toJSONString(idList));
+			jsonObject.put(K.minNumber, minNumber);
+			jsonObject.put(K.maxNumber, maxNumber);
+			jsonObject.put(K.tip, tip);
+		}
+
+		@Override
+		public void applyRecord(JSONObject jsonObject) {
+			idList = JSONObject.parseArray(jsonObject.getString(K.idList), Long.class);
+			minNumber = jsonObject.getIntValue(K.minNumber);
+			maxNumber = jsonObject.getIntValue(K.maxNumber);
+			tip = jsonObject.getString(K.tip);
+		}
+		
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj) {
+				return true;
+			}
+			if (obj == null) {
+				return false;
+			}
+			if (!(obj instanceof SCSelectCards)) {
+				return false;
+			}
+			SCSelectCards _value = (SCSelectCards) obj;
+			if (!this.idList.equals(_value.idList)) {
+				return false;
+			}
+			if (this.minNumber != _value.minNumber) {
+				return false;
+			}
+			if (this.maxNumber != _value.maxNumber) {
+				return false;
+			}
+			if (!this.tip.equals(_value.tip)) {
+				return false;
+			}
+			return true;
+		}
+		
+		public SCSelectCards copy() {
+			SCSelectCards _value = new SCSelectCards();
+			_value.idList = new ArrayList<>(this.idList);
+			_value.minNumber = this.minNumber;
+			_value.maxNumber = this.maxNumber;
+			_value.tip = this.tip;
+			return _value;
+		}
+		
+		public SCSelectCards deepCopy() {
+			SCSelectCards _value = new SCSelectCards();
+			_value.idList = new ArrayList<>(this.idList);
+			_value.minNumber = this.minNumber;
+			_value.maxNumber = this.maxNumber;
+			_value.tip = this.tip;
+			return _value;
+		}
+	}
+	
+	public static class DPlayerDetail extends DSyncBase {
+		public static final String TypeName = "DPlayerDetail";
+		
+		private String name;
+
+		public static class K {
+			public static final String name = "name";
+		}
+
+		public DPlayerDetail() {
+			init();
+		}
+
+		@Override
+		protected void init() {
+			name = "";
+		}
+		
+		public String getName() {
+			return name;
+		}
+		
+		public void setName(String name) {
+			this.name = name;
+		}
+		
+
+		public static DPlayerDetail parseJSONObject(JSONObject jsonObject) {
+			DPlayerDetail _value = new DPlayerDetail();
+			if (!jsonObject.isEmpty()) {
+				_value.applyRecord(jsonObject);
+			}
+			return _value;
+		}
+		
+		public static List<DPlayerDetail> parseJSONArray(JSONArray jsonArray) {
+			ArrayList<DPlayerDetail> list = new ArrayList<DPlayerDetail>();
+			for (int i = 0; i < jsonArray.size(); i++) {
+				DPlayerDetail _value = new DPlayerDetail();
+				JSONObject jsonObject = jsonArray.getJSONObject(i);
+				if (!jsonObject.isEmpty()) {
+					_value.applyRecord(jsonObject);
+				}
+				list.add(_value);
+			}
+			return list;
+		}
+
+		@Override
+		public void getRecord(JSONObject jsonObject) {
+			jsonObject.put(DSyncBase.K.TypeName, TypeName);
+			jsonObject.put(K.name, name);
+		}
+
+		@Override
+		public void applyRecord(JSONObject jsonObject) {
+			name = jsonObject.getString(K.name);
+		}
+		
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj) {
+				return true;
+			}
+			if (obj == null) {
+				return false;
+			}
+			if (!(obj instanceof DPlayerDetail)) {
+				return false;
+			}
+			DPlayerDetail _value = (DPlayerDetail) obj;
+			if (!this.name.equals(_value.name)) {
+				return false;
+			}
+			return true;
+		}
+		
+		public DPlayerDetail copy() {
+			DPlayerDetail _value = new DPlayerDetail();
+			_value.name = this.name;
+			return _value;
+		}
+		
+		public DPlayerDetail deepCopy() {
+			DPlayerDetail _value = new DPlayerDetail();
+			_value.name = this.name;
+			return _value;
+		}
+	}
+	
+	public static class CSInTurnAction extends DSyncBase {
+		public static final String TypeName = "CSInTurnAction";
+		
+		private EInTurnActionType type;
+		/** -1表示从牌库顶抽取 */
+		private int position;
+
+		public static class K {
+			public static final String type = "type";
+			public static final String position = "position";
+		}
+
+		public CSInTurnAction() {
+			init();
+		}
+
+		@Override
+		protected void init() {
+			type = EInTurnActionType.TurnEnd;
+			position = 0;
+		}
+		
+		public EInTurnActionType getType() {
+			return type;
+		}
+		
+		public void setType(EInTurnActionType type) {
+			this.type = type;
+		}
+		
+		/** -1表示从牌库顶抽取 */
+		public int getPosition() {
+			return position;
+		}
+		
+		/** -1表示从牌库顶抽取 */
+		public void setPosition(int position) {
+			this.position = position;
+		}
+		
+
+		public static CSInTurnAction parseJSONObject(JSONObject jsonObject) {
+			CSInTurnAction _value = new CSInTurnAction();
+			if (!jsonObject.isEmpty()) {
+				_value.applyRecord(jsonObject);
+			}
+			return _value;
+		}
+		
+		public static List<CSInTurnAction> parseJSONArray(JSONArray jsonArray) {
+			ArrayList<CSInTurnAction> list = new ArrayList<CSInTurnAction>();
+			for (int i = 0; i < jsonArray.size(); i++) {
+				CSInTurnAction _value = new CSInTurnAction();
+				JSONObject jsonObject = jsonArray.getJSONObject(i);
+				if (!jsonObject.isEmpty()) {
+					_value.applyRecord(jsonObject);
+				}
+				list.add(_value);
+			}
+			return list;
+		}
+
+		@Override
+		public void getRecord(JSONObject jsonObject) {
+			jsonObject.put(DSyncBase.K.TypeName, TypeName);
+			jsonObject.put(K.type, type.ordinal());
+			jsonObject.put(K.position, position);
+		}
+
+		@Override
+		public void applyRecord(JSONObject jsonObject) {
+			type = EInTurnActionType.values()[(jsonObject.getIntValue(K.type))];
+			position = jsonObject.getIntValue(K.position);
+		}
+		
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj) {
+				return true;
+			}
+			if (obj == null) {
+				return false;
+			}
+			if (!(obj instanceof CSInTurnAction)) {
+				return false;
+			}
+			CSInTurnAction _value = (CSInTurnAction) obj;
+			if (!this.type.equals(_value.type)) {
+				return false;
+			}
+			if (this.position != _value.position) {
+				return false;
+			}
+			return true;
+		}
+		
+		public CSInTurnAction copy() {
+			CSInTurnAction _value = new CSInTurnAction();
+			_value.type = this.type;
+			_value.position = this.position;
+			return _value;
+		}
+		
+		public CSInTurnAction deepCopy() {
+			CSInTurnAction _value = new CSInTurnAction();
+			_value.type = this.type;
+			_value.position = this.position;
+			return _value;
+		}
+	}
+	
+	public static class SCCardsMove extends DSyncBase {
+		public static final String TypeName = "SCCardsMove";
+		
+		private List<DCard> cards;
+
+		public static class K {
+			public static final String cards = "cards";
+		}
+
+		public SCCardsMove() {
+			init();
+		}
+
+		@Override
+		protected void init() {
+			cards = new ArrayList<>();
+		}
+		
+		public int getCardsCount() {
+			return this.cards.size();
+		}
+		
+		public List<DCard> getCardsList() {
+			return new ArrayList<>(cards);
+		}
+		
+		public void setCardsList(List<DCard> cards) {
+			this.cards.clear();
+			this.cards.addAll(cards);
+		}
+
+		public void addCards(DCard cards) {
+			this.cards.add(cards);
+		}
+		
+		public void addAllCards(List<DCard> cards) {
+			this.cards.addAll(cards);
+		}
+		
+		public void clearCards() {
+			this.cards.clear();
+		}
+		
+
+		public static SCCardsMove parseJSONObject(JSONObject jsonObject) {
+			SCCardsMove _value = new SCCardsMove();
+			if (!jsonObject.isEmpty()) {
+				_value.applyRecord(jsonObject);
+			}
+			return _value;
+		}
+		
+		public static List<SCCardsMove> parseJSONArray(JSONArray jsonArray) {
+			ArrayList<SCCardsMove> list = new ArrayList<SCCardsMove>();
+			for (int i = 0; i < jsonArray.size(); i++) {
+				SCCardsMove _value = new SCCardsMove();
+				JSONObject jsonObject = jsonArray.getJSONObject(i);
+				if (!jsonObject.isEmpty()) {
+					_value.applyRecord(jsonObject);
+				}
+				list.add(_value);
+			}
+			return list;
+		}
+
+		@Override
+		public void getRecord(JSONObject jsonObject) {
+			jsonObject.put(DSyncBase.K.TypeName, TypeName);
+			jsonObject.put(K.cards, getJSONArray(cards));
+		}
+
+		@Override
+		public void applyRecord(JSONObject jsonObject) {
+			cards = DCard.parseJSONArray(jsonObject.getJSONArray(K.cards));
+		}
+		
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj) {
+				return true;
+			}
+			if (obj == null) {
+				return false;
+			}
+			if (!(obj instanceof SCCardsMove)) {
+				return false;
+			}
+			SCCardsMove _value = (SCCardsMove) obj;
+			if (!this.cards.equals(_value.cards)) {
+				return false;
+			}
+			return true;
+		}
+		
+		public SCCardsMove copy() {
+			SCCardsMove _value = new SCCardsMove();
+			_value.cards = new ArrayList<>(this.cards);
+			return _value;
+		}
+		
+		public SCCardsMove deepCopy() {
+			SCCardsMove _value = new SCCardsMove();
+			_value.cards = new ArrayList<>();
+			for(DCard _f: this.cards) {
+				if (_f != null) {
+					_value.cards.add(_f.deepCopy());
+				} else {
+					_value.cards.add(null);
+				}
+			}
+			return _value;
+		}
+	}
+	
 	public static class DHuman extends DSyncBase {
 		public static final String TypeName = "DHuman";
 		
@@ -734,6 +1378,7 @@ public class GameMsgHandler {
 		private int diamond;
 		private int handPileSize;
 		private int monsterPileSize;
+		private DPlayerDetail detail;
 
 		public static class K {
 			public static final String token = "token";
@@ -742,6 +1387,7 @@ public class GameMsgHandler {
 			public static final String diamond = "diamond";
 			public static final String handPileSize = "handPileSize";
 			public static final String monsterPileSize = "monsterPileSize";
+			public static final String detail = "detail";
 		}
 
 		public DHuman() {
@@ -756,6 +1402,7 @@ public class GameMsgHandler {
 			diamond = 0;
 			handPileSize = 0;
 			monsterPileSize = 0;
+			detail = null;
 		}
 		
 		public String getToken() {
@@ -806,6 +1453,14 @@ public class GameMsgHandler {
 			this.monsterPileSize = monsterPileSize;
 		}
 		
+		public DPlayerDetail getDetail() {
+			return detail;
+		}
+		
+		public void setDetail(DPlayerDetail detail) {
+			this.detail = detail;
+		}
+		
 
 		public static DHuman parseJSONObject(JSONObject jsonObject) {
 			DHuman _value = new DHuman();
@@ -837,6 +1492,7 @@ public class GameMsgHandler {
 			jsonObject.put(K.diamond, diamond);
 			jsonObject.put(K.handPileSize, handPileSize);
 			jsonObject.put(K.monsterPileSize, monsterPileSize);
+			jsonObject.put(K.detail, getJSONObject(detail));
 		}
 
 		@Override
@@ -847,6 +1503,7 @@ public class GameMsgHandler {
 			diamond = jsonObject.getIntValue(K.diamond);
 			handPileSize = jsonObject.getIntValue(K.handPileSize);
 			monsterPileSize = jsonObject.getIntValue(K.monsterPileSize);
+			detail = DPlayerDetail.parseJSONObject(jsonObject.getJSONObject(K.detail));
 		}
 		
 		@Override
@@ -879,6 +1536,9 @@ public class GameMsgHandler {
 			if (this.monsterPileSize != _value.monsterPileSize) {
 				return false;
 			}
+			if (!this.detail.equals(_value.detail)) {
+				return false;
+			}
 			return true;
 		}
 		
@@ -890,6 +1550,7 @@ public class GameMsgHandler {
 			_value.diamond = this.diamond;
 			_value.handPileSize = this.handPileSize;
 			_value.monsterPileSize = this.monsterPileSize;
+			_value.detail = this.detail;
 			return _value;
 		}
 		
@@ -901,6 +1562,9 @@ public class GameMsgHandler {
 			_value.diamond = this.diamond;
 			_value.handPileSize = this.handPileSize;
 			_value.monsterPileSize = this.monsterPileSize;
+			if (this.detail != null) {
+				_value.detail = this.detail.deepCopy();
+			}
 			return _value;
 		}
 	}
@@ -912,14 +1576,21 @@ public class GameMsgHandler {
 	}
 	public static enum EPileType {
 		NumberShop,
-		NumberPile,
+		NumberDrawPile,
 		NumberDiscardPile,
 		MonsterShop,
-		MonsterPile,
+		MonsterDrawPile,
 		MonsterDiscardPile,
 		Hand,
 		Gate,
 		FieldMonster,
+	}
+	public static enum EInTurnActionType {
+		TurnEnd,
+		GainNumberCard,
+		GainMonsterCard,
+		RefreshNumberPile,
+		BuildMonster,
 	}
 
 

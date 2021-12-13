@@ -21,8 +21,8 @@ public class LocalClient extends Terminal<GameMessage, GameMessage> implements I
         board.humanList.add(new Human(GameUtils.AI_TOKEN));
         board.starter = board.humanList.get(0);
 
-        board.monsterShop.addAll(CardManager.createMonsterShopPile());
-        board.numberShop.addAll(CardManager.createNumberShopPile());
+        board.monsterDrawPile.addAll(CardManager.createMonsterShopPile());
+        board.numberDrawPile.addAll(CardManager.createNumberShopPile());
         board.init();
     }
 

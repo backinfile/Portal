@@ -8,6 +8,8 @@ import com.backinfile.support.func.Action0;
 
 public abstract class HumanOper implements GameMsgHandler.DSyncListener {
     @AutoSet
+    public Board board;
+    @AutoSet
     public Human human;
 
     private Action0 callback;
