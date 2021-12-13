@@ -60,8 +60,9 @@ public class Res {
             return;
         }
 
-        String path = CLASSES_FILE_PATH;
-        Gdx.files.local(path).writeString(Reflections.getAllClassName(Settings.PACKAGE_NAME), false);
+        Gdx.files.local(CLASSES_FILE_PATH).writeString(
+                Reflections.getAllClassName(Settings.SKILL_PACKAGE_NAME),
+                false);
     }
 
 

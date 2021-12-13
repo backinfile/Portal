@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 
 public class Settings {
     public static final String PACKAGE_NAME = "com.backinfile";
+    public static final String SKILL_PACKAGE_NAME = "com.backinfile.portal.model.skills";
 
     public static final String LOCAL_HOST = "127.0.0.1";
     public static final String BROADCAST_ADDRESS = "255.255.255.255";

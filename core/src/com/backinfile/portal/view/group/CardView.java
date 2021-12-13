@@ -5,9 +5,10 @@ import com.backinfile.portal.LocalString;
 import com.backinfile.portal.Res;
 import com.backinfile.portal.model.Card;
 import com.backinfile.portal.view.actor.CardSize;
-import com.backinfile.support.Utils;
+import com.backinfile.support.Param;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -23,25 +24,15 @@ public class CardView extends Group {
     private CardViewState cardViewState;
     private CardViewState targetCardViewState = null;
 
-    private final Label titleLabel = new Label("", new Label.LabelStyle(Res.DefaultFont, Color.BLACK));
+    //    private final Label titleLabel = new Label("", new Label.LabelStyle(Res.DefaultFont, Color.BLACK));
     private final Image mainImage = new Image();
     private final Image borderImage = new Image();
 
-    private final Image healthIcon = new Image();
-    private final Label healthLabel = new Label("", new Label.LabelStyle(Res.DefaultFont, Color.WHITE));
-
-    private final Image costIcon = new Image();
-    private final Label costLabel = new Label("", new Label.LabelStyle(Res.DefaultFont, Color.WHITE));
+    private final Param actorParam = new Param();
 
     public CardView() {
-        addActor(mainImage);
         addActor(borderImage);
-        addActor(healthIcon);
-        addActor(healthLabel);
-        addActor(costIcon);
-        addActor(costLabel);
-        addActor(titleLabel);
-
+        addActor(mainImage);
 
         setSize(CardSize.Large.getWidth(), CardSize.Large.getHeight());
         setOrigin(Align.center);
@@ -68,12 +59,61 @@ public class CardView extends Group {
     }
 
     public void setCard(Card card) {
+        // clear element
+        actorParam.map((key, v) -> v.remove(), Actor.class);
+        actorParam.clear();
+
         this.card = card;
-        borderImage.setDrawable(Res.getTexture(cardTypeString.images[card.localCardString.cardType.ordinal()]));
-        mainImage.setDrawable(Res.getTexture(card.localCardString.image));
+        if (card == null) {
+            borderImage.setDrawable(Res.getTexture(uiString.images[0]));
+            mainImage.setDrawable(Res.getTexture(uiString.images[1]));
+        } else {
+            mainImage.setDrawable(Res.getTexture(card.localCardString.image));
+            borderImage.setDrawable(Res.getTexture(cardTypeString.images[card.localCardString.cardType.ordinal()]));
+            if (card.isMonsterCard()) {
+                {
+                    String cardName = card.localCardString.name;
+                    Label titleLabel = new Label(cardName, new Label.LabelStyle(Res.DefaultFont, Color.BLACK));
+                    titleLabel.setFontScale(CardSize.Large.getScale());
+                    titleLabel.setAlignment(Align.center);
+                    titleLabel.setWrap(false);
+                    titleLabel.setBounds(0, getHeight() * 0.03f, getWidth(), CardSize.Large.getFontSize());
+                    titleLabel.setText(cardName);
+                    addActor(titleLabel);
+                    actorParam.put("titleLabel", titleLabel);
+                }
+            } else {
+                int number = card.localCardString.number;
+                String numberValue = String.valueOf(number);
+                {
+                    Label numberTitleLabel = new Label(numberValue, new Label.LabelStyle(Res.DefaultFont, Color.BLACK));
+                    numberTitleLabel.setFontScale(CardSize.Large.getScale());
+                    numberTitleLabel.setAlignment(Align.left);
+                    numberTitleLabel.setWrap(false);
+                    numberTitleLabel.setBounds(0, getHeight() * 0.97f - CardSize.Large.getFontSize(), getWidth(), CardSize.Large.getFontSize());
+                    numberTitleLabel.setText(numberValue);
+                    addActor(numberTitleLabel);
+                    actorParam.put("numberTitleLabel", numberTitleLabel);
+                }
+
+                {
+                    Label numberCenterLabel = new Label(numberValue, new Label.LabelStyle(Res.DefaultFont, Color.BLACK));
+                    float scale = 2.2f;
+                    float fontSize = CardSize.Large.getFontSize() * scale;
+                    float fontScale = CardSize.Large.getScale() * scale;
+                    numberCenterLabel.setFontScale(fontScale);
+                    numberCenterLabel.setAlignment(Align.center);
+                    numberCenterLabel.setWrap(false);
+                    numberCenterLabel.setBounds(0, 0, getWidth(), getHeight());
+                    numberCenterLabel.setText(numberValue);
+
+
+                }
+            }
+        }
 
         setCardViewState(CardViewState.Normal);
-        setTitle(card.localCardString.name);
+
     }
 
     public void setCardViewState(CardViewState cardViewState) {
@@ -97,18 +137,7 @@ public class CardView extends Group {
         mainImage.setColor(cardViewState.color);
     }
 
-    public void setTitle(String text) {
-        if (Utils.isNullOrEmpty(text)) {
-            titleLabel.setVisible(false);
-        } else {
-            titleLabel.setFontScale(CardSize.Large.getScale());
-            titleLabel.setAlignment(Align.center);
-            titleLabel.setWrap(false);
-            titleLabel.setBounds(0, getHeight() * 0.03f, getWidth(), CardSize.Large.getFontSize());
-            titleLabel.setText(text);
-            titleLabel.setVisible(true);
-        }
-    }
+
 //
 //    public void updateCost() {
 //        int cost = card.data;

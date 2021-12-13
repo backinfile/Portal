@@ -71,7 +71,10 @@
       "sn": "card",
       "images": [
         {
-          "path": "image/gen/cardDecorate.png"
+          "path": "image/gen/virus.png"
+        },
+        {
+          "path": "image/gen/cardBorderNumber.png"
         }
       ]
     },
