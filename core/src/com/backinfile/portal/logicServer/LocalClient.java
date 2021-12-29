@@ -1,11 +1,11 @@
 package com.backinfile.portal.logicServer;
 
+import com.backinfile.gameRPC.net.GameMessage;
 import com.backinfile.portal.manager.CardManager;
 import com.backinfile.portal.manager.GameManager;
 import com.backinfile.portal.manager.GameUtils;
 import com.backinfile.portal.model.Board;
 import com.backinfile.portal.model.Human;
-import com.backinfile.portal.net.GameMessage;
 import com.backinfile.support.IAlive;
 import com.backinfile.support.Terminal;
 
@@ -32,7 +32,7 @@ public class LocalClient extends Terminal<GameMessage, GameMessage> implements I
         String token = GameManager.getToken();
         while (hasMsg()) {
             GameMessage gameMessage = pollMsg();
-            board.onMessage(token, gameMessage.getMessage());
+//            board.onMessage(token, gameMessage.getMessage());
         }
 
         // board 推送消息
@@ -40,7 +40,7 @@ public class LocalClient extends Terminal<GameMessage, GameMessage> implements I
             LinkedList<String> msgList = board.outputMsgMap.get(token);
             while (!msgList.isEmpty()) {
                 String msg = msgList.pollFirst();
-                outputMsg(new GameMessage(msg));
+//                outputMsg(new GameMessage(msg));
             }
         }
 

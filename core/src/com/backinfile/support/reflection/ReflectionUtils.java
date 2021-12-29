@@ -1,7 +1,7 @@
 package com.backinfile.support.reflection;
 
+import com.backinfile.portal.Log;
 import com.backinfile.support.Utils;
-import com.backinfile.support.log.UtilLog;
 
 import java.io.File;
 import java.io.IOException;
@@ -64,7 +64,7 @@ public class ReflectionUtils {
             try {
                 classes.add(Class.forName(name));
             } catch (ClassNotFoundException e) {
-                UtilLog.reflection.error(e);
+                Log.reflection.error("", e);
             }
         }
         return classes;

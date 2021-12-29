@@ -44,7 +44,7 @@ public class SkillManager {
                     Log.res.info("find skill class:{}", clazz.getSimpleName());
                 }
             } catch (ClassNotFoundException e) {
-                Log.res.error(e);
+                Log.res.error("", e);
             }
         }
     }
@@ -74,7 +74,7 @@ public class SkillManager {
                 Skill skill = (Skill) skillClass.getConstructor(argsClass).newInstance(argsValue);
                 return skill;
             } catch (Exception e) {
-                Log.res.error(e);
+                Log.res.error("", e);
             }
         }
         Log.res.error("can not find skill class: {}", sn);

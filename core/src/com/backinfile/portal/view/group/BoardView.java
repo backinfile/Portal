@@ -21,8 +21,8 @@ public class BoardView extends Group {
 
         localClient = new LocalClient();
         localClient.addOutputListener(msg -> {
-            String content = msg.getMessage();
-            viewActionQueue.add(GameMsgHandler.parseStruct(content));
+//            String content = msg.getMessage();
+//            viewActionQueue.add(GameMsgHandler.parseStruct(content));
         });
         localClient.start();
     }

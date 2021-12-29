@@ -4,7 +4,6 @@ import com.backinfile.gdxSupport.DefaultGame;
 import com.backinfile.portal.gen.GenImage;
 import com.backinfile.portal.manager.CardManager;
 import com.backinfile.portal.manager.SkillManager;
-import com.backinfile.portal.net.ServerLocateManager;
 import com.backinfile.portal.view.screens.GameScreen;
 import com.backinfile.support.reflection.Reflections;
 
@@ -25,8 +24,6 @@ public class MainGame extends DefaultGame {
             Reflections.classRewriteInit(Settings.PACKAGE_NAME, MainGame.class.getClassLoader());
             GenImage.gen();
         }
-
-        ServerLocateManager.locateServerByHtml();
 
         ScreenSize.init();
         Res.init();

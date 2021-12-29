@@ -60,7 +60,7 @@ public class ServerLocateManager {
 
             @Override
             public void failed(Throwable t) {
-                Log.net.error(t, "locateServerByHtml get failed");
+                Log.net.error("locateServerByHtml get failed", t);
             }
 
             @Override

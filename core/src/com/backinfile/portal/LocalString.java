@@ -95,7 +95,7 @@ public class LocalString {
         public String extraDescription = "[EXTRA_DESCRIPTION]";
 
         public CardType cardType = CardType.Monster;
-        public CardFamily cardFamily = CardFamily.Mech;
+        public com.backinfile.portal.model.CardFamily cardFamily = CardFamily.Mech;
         public int number;
         public boolean refreshMonster = false;
         public DCost cost = null;
@@ -110,6 +110,7 @@ public class LocalString {
     public static class DSkill {
         public String sn;
         public String[] args;
+
     }
 
     /**

@@ -1,6 +1,5 @@
 package com.backinfile.portal.model;
 
-import com.backinfile.support.StreamUtils;
 import com.backinfile.support.func.Predicate;
 
 import java.util.ArrayList;
@@ -23,6 +22,6 @@ public class SkillContainer implements Iterable<Skill> {
     }
 
     public void removeIf(Predicate<Skill> predicate) {
-        StreamUtils.removeIf(skills, predicate);
+        skills.removeIf(predicate::test);
     }
 }

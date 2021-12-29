@@ -1,7 +1,7 @@
 package com.backinfile.support.reflection;
 
+import com.backinfile.portal.Log;
 import com.backinfile.support.Utils;
-import com.backinfile.support.log.UtilLog;
 import javassist.ClassPool;
 import javassist.CtClass;
 import javassist.CtMethod;
@@ -35,10 +35,10 @@ public class Reflections {
                 needRewrite |= invokeLogRewrite(pool, ctClass);
                 if (needRewrite) {
                     ctClass.toClass();
-                    UtilLog.reflection.info("rewrite class {}", targetClassName);
+                    Log.reflection.info("rewrite class {}", targetClassName);
                 }
             } catch (Exception e) {
-                UtilLog.reflection.error(e, "error in rewrite class {}", targetClassName);
+                Log.reflection.error("error in rewrite class " + targetClassName, e);
             }
         }
     }
@@ -75,7 +75,7 @@ public class Reflections {
             } else {
                 pattern = LogInvokeInfo.DEFAULT_PATTERN;
             }
-            String codePattern = MessageFormat.format("{0}.invoke.info({1});", UtilLog.class.getName(), pattern);
+            String codePattern = MessageFormat.format("{0}.invoke.info({1});", Log.class.getName(), pattern);
             String code = MessageFormat.format(codePattern, ctMethod.getDeclaringClass().getSimpleName(),
                     ctMethod.getName(), "\"args:\"+java.util.Arrays.toString($args)");
             ctMethod.insertBefore(code);

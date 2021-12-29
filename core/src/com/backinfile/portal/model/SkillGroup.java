@@ -18,7 +18,7 @@ public class SkillGroup {
     }
 
     public void removeSkills(Predicate<Skill> predicate) {
-        StreamUtils.removeIf(skillList, predicate);
+        skillList.removeIf(predicate::test);
     }
 
     public void removeSkills(SkillDuration skillDuration) {

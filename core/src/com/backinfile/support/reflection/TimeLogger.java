@@ -1,7 +1,7 @@
 package com.backinfile.support.reflection;
 
+import com.backinfile.portal.Log;
 import com.backinfile.support.Time2;
-import com.backinfile.support.log.UtilLog;
 
 public class TimeLogger {
     private long startTime;
@@ -13,6 +13,6 @@ public class TimeLogger {
     }
 
     public void log() {
-        UtilLog.timer.info("{} using {} second", name, (Time2.currentTimeMillis() - startTime) / (float) Time2.SEC);
+        Log.timer.info("{} using {} second", name, (Time2.currentTimeMillis() - startTime) / (float) Time2.SEC);
     }
 }
