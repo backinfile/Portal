@@ -4,6 +4,7 @@ buildscript {
     repositories {
         mavenLocal()
         maven { url 'https://maven.aliyun.com/repository/public' }
+        maven { url 'https://jitpack.io' }
         mavenCentral()
         gradlePluginPortal()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
@@ -37,6 +38,7 @@ allprojects {
         gradlePluginPortal()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
         maven { url "https://oss.sonatype.org/content/repositories/releases/" }
+        maven { url 'https://jitpack.io' }
     }
 }
 
@@ -88,6 +90,9 @@ project(":core") {
         implementation group: 'org.freemarker', name: 'freemarker', version: '2.3.31'
         implementation group: 'org.javassist', name: 'javassist', version: '3.28.0-GA'
         implementation 'io.netty:netty-all:4.1.44.Final'
+        implementation group: 'org.reflections', name: 'reflections', version: '0.9.5-RC2'
+        implementation 'com.github.backinfile:gameRPC:v1.0.0'
+        implementation 'com.github.backinfile:support:v1.0.1'
 
     }
 }

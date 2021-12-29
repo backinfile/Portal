@@ -31,8 +31,8 @@ public class CardView extends Group {
     private final Param actorParam = new Param();
 
     public CardView() {
-        addActor(borderImage);
         addActor(mainImage);
+        addActor(borderImage);
 
         setSize(CardSize.Large.getWidth(), CardSize.Large.getHeight());
         setOrigin(Align.center);
@@ -90,7 +90,7 @@ public class CardView extends Group {
                     numberTitleLabel.setFontScale(CardSize.Large.getScale());
                     numberTitleLabel.setAlignment(Align.left);
                     numberTitleLabel.setWrap(false);
-                    numberTitleLabel.setBounds(0, getHeight() * 0.97f - CardSize.Large.getFontSize(), getWidth(), CardSize.Large.getFontSize());
+                    numberTitleLabel.setBounds(getWidth() * 0.08f, getHeight() * 0.97f - CardSize.Large.getFontSize(), getWidth(), CardSize.Large.getFontSize());
                     numberTitleLabel.setText(numberValue);
                     addActor(numberTitleLabel);
                     actorParam.put("numberTitleLabel", numberTitleLabel);
@@ -106,8 +106,8 @@ public class CardView extends Group {
                     numberCenterLabel.setWrap(false);
                     numberCenterLabel.setBounds(0, 0, getWidth(), getHeight());
                     numberCenterLabel.setText(numberValue);
-
-
+                    addActor(numberCenterLabel);
+                    actorParam.put("numberCenterLabel", numberCenterLabel);
                 }
             }
         }

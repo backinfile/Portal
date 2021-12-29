@@ -7,6 +7,7 @@ public class Settings {
     public static final String PACKAGE_NAME = "com.backinfile";
     public static final String SKILL_PACKAGE_NAME = "com.backinfile.portal.model.skills";
 
+    public static String SERVER_INFO_URL = "http://backinfile.gitee.io/gitee-page/";
     public static final String LOCAL_HOST = "127.0.0.1";
     public static final String BROADCAST_ADDRESS = "255.255.255.255";
     public static final int GAME_SERVER_PORT = 18081;

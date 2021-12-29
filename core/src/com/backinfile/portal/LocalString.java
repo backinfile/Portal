@@ -1,6 +1,7 @@
 package com.backinfile.portal;
 
 import com.alibaba.fastjson.JSONObject;
+import com.backinfile.portal.model.CardFamily;
 import com.backinfile.portal.model.CardType;
 import com.backinfile.support.Utils;
 import com.backinfile.support.reflection.Timing;
@@ -94,6 +95,7 @@ public class LocalString {
         public String extraDescription = "[EXTRA_DESCRIPTION]";
 
         public CardType cardType = CardType.Monster;
+        public CardFamily cardFamily = CardFamily.Mech;
         public int number;
         public boolean refreshMonster = false;
         public DCost cost = null;
@@ -102,7 +104,6 @@ public class LocalString {
         public int copy = 1; // 卡池中有几张复制
 
         public LocalImagePathString image = null;
-
         public boolean test = false; // 非正式卡牌
     }
 

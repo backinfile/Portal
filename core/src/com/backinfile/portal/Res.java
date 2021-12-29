@@ -36,6 +36,7 @@ public class Res {
     public static BitmapFont DefaultFontLargeLarge;
 
     public static final String CLASSES_FILE_PATH = "data/classes.txt";
+    public static final String SERVER_IP_FILE_PATH = "data/server.txt";
 
     private static final FontCharacterCollection fontCharacterCollection = new FontCharacterCollection();
     private static final Map<String, Texture> textureMap = new HashMap<>(); // path->image
@@ -143,7 +144,9 @@ public class Res {
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         fontCharacterCollection.put(FreeTypeFontGenerator.DEFAULT_CHARS);
         parameter.characters = fontCharacterCollection.getAll();
-        parameter.borderWidth = 0f;
+//        parameter.borderWidth = 1f;
+//        parameter.borderColor = Color.WHITE.cpy();
+        parameter.color = Color.BLACK.cpy();
         parameter.shadowColor = new Color(0, 0, 0, 0.25f);
         parameter.shadowOffsetX = 2;
         parameter.minFilter = Texture.TextureFilter.Linear;

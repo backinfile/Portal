@@ -12,7 +12,7 @@ public class NetTest {
 
 class TestClient {
     public static void main(String[] args) throws IOException {
-        ServerLocateManager.startSearch();
+        ServerLocateManager.startSearchInLAN();
 
         while (true) {
             Utils.sleep(Time2.SEC);
